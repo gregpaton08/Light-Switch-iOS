@@ -1,0 +1,541 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		372CB4C11C0418200064F4DE /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 372CB4C01C0418200064F4DE /* main.m */; };
+		372CB4C41C0418200064F4DE /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 372CB4C31C0418200064F4DE /* AppDelegate.m */; };
+		372CB4C71C0418200064F4DE /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 372CB4C61C0418200064F4DE /* ViewController.m */; };
+		372CB4CA1C0418200064F4DE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 372CB4C81C0418200064F4DE /* Main.storyboard */; };
+		372CB4CD1C0418200064F4DE /* Light_Switch.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 372CB4CB1C0418200064F4DE /* Light_Switch.xcdatamodeld */; };
+		372CB4CF1C0418200064F4DE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 372CB4CE1C0418200064F4DE /* Assets.xcassets */; };
+		372CB4D21C0418200064F4DE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 372CB4D01C0418200064F4DE /* LaunchScreen.storyboard */; };
+		372CB4DD1C0418200064F4DE /* Light_SwitchTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 372CB4DC1C0418200064F4DE /* Light_SwitchTests.m */; };
+		372CB4E81C0418200064F4DE /* Light_SwitchUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 372CB4E71C0418200064F4DE /* Light_SwitchUITests.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		372CB4D91C0418200064F4DE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 372CB4B41C0418200064F4DE /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 372CB4BB1C0418200064F4DE;
+			remoteInfo = "Light Switch";
+		};
+		372CB4E41C0418200064F4DE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 372CB4B41C0418200064F4DE /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 372CB4BB1C0418200064F4DE;
+			remoteInfo = "Light Switch";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		372CB4BC1C0418200064F4DE /* Light Switch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Light Switch.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		372CB4C01C0418200064F4DE /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		372CB4C21C0418200064F4DE /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		372CB4C31C0418200064F4DE /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		372CB4C51C0418200064F4DE /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		372CB4C61C0418200064F4DE /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		372CB4C91C0418200064F4DE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		372CB4CC1C0418200064F4DE /* Light_Switch.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Light_Switch.xcdatamodel; sourceTree = "<group>"; };
+		372CB4CE1C0418200064F4DE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		372CB4D11C0418200064F4DE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		372CB4D31C0418200064F4DE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		372CB4D81C0418200064F4DE /* Light SwitchTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Light SwitchTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		372CB4DC1C0418200064F4DE /* Light_SwitchTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Light_SwitchTests.m; sourceTree = "<group>"; };
+		372CB4DE1C0418200064F4DE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		372CB4E31C0418200064F4DE /* Light SwitchUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Light SwitchUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		372CB4E71C0418200064F4DE /* Light_SwitchUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Light_SwitchUITests.m; sourceTree = "<group>"; };
+		372CB4E91C0418200064F4DE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		372CB4B91C0418200064F4DE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		372CB4D51C0418200064F4DE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		372CB4E01C0418200064F4DE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		372CB4B31C0418200064F4DE = {
+			isa = PBXGroup;
+			children = (
+				372CB4BE1C0418200064F4DE /* Light Switch */,
+				372CB4DB1C0418200064F4DE /* Light SwitchTests */,
+				372CB4E61C0418200064F4DE /* Light SwitchUITests */,
+				372CB4BD1C0418200064F4DE /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		372CB4BD1C0418200064F4DE /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				372CB4BC1C0418200064F4DE /* Light Switch.app */,
+				372CB4D81C0418200064F4DE /* Light SwitchTests.xctest */,
+				372CB4E31C0418200064F4DE /* Light SwitchUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		372CB4BE1C0418200064F4DE /* Light Switch */ = {
+			isa = PBXGroup;
+			children = (
+				372CB4C21C0418200064F4DE /* AppDelegate.h */,
+				372CB4C31C0418200064F4DE /* AppDelegate.m */,
+				372CB4C51C0418200064F4DE /* ViewController.h */,
+				372CB4C61C0418200064F4DE /* ViewController.m */,
+				372CB4C81C0418200064F4DE /* Main.storyboard */,
+				372CB4CE1C0418200064F4DE /* Assets.xcassets */,
+				372CB4D01C0418200064F4DE /* LaunchScreen.storyboard */,
+				372CB4D31C0418200064F4DE /* Info.plist */,
+				372CB4CB1C0418200064F4DE /* Light_Switch.xcdatamodeld */,
+				372CB4BF1C0418200064F4DE /* Supporting Files */,
+			);
+			path = "Light Switch";
+			sourceTree = "<group>";
+		};
+		372CB4BF1C0418200064F4DE /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				372CB4C01C0418200064F4DE /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		372CB4DB1C0418200064F4DE /* Light SwitchTests */ = {
+			isa = PBXGroup;
+			children = (
+				372CB4DC1C0418200064F4DE /* Light_SwitchTests.m */,
+				372CB4DE1C0418200064F4DE /* Info.plist */,
+			);
+			path = "Light SwitchTests";
+			sourceTree = "<group>";
+		};
+		372CB4E61C0418200064F4DE /* Light SwitchUITests */ = {
+			isa = PBXGroup;
+			children = (
+				372CB4E71C0418200064F4DE /* Light_SwitchUITests.m */,
+				372CB4E91C0418200064F4DE /* Info.plist */,
+			);
+			path = "Light SwitchUITests";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		372CB4BB1C0418200064F4DE /* Light Switch */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 372CB4EC1C0418200064F4DE /* Build configuration list for PBXNativeTarget "Light Switch" */;
+			buildPhases = (
+				372CB4B81C0418200064F4DE /* Sources */,
+				372CB4B91C0418200064F4DE /* Frameworks */,
+				372CB4BA1C0418200064F4DE /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Light Switch";
+			productName = "Light Switch";
+			productReference = 372CB4BC1C0418200064F4DE /* Light Switch.app */;
+			productType = "com.apple.product-type.application";
+		};
+		372CB4D71C0418200064F4DE /* Light SwitchTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 372CB4EF1C0418200064F4DE /* Build configuration list for PBXNativeTarget "Light SwitchTests" */;
+			buildPhases = (
+				372CB4D41C0418200064F4DE /* Sources */,
+				372CB4D51C0418200064F4DE /* Frameworks */,
+				372CB4D61C0418200064F4DE /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				372CB4DA1C0418200064F4DE /* PBXTargetDependency */,
+			);
+			name = "Light SwitchTests";
+			productName = "Light SwitchTests";
+			productReference = 372CB4D81C0418200064F4DE /* Light SwitchTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		372CB4E21C0418200064F4DE /* Light SwitchUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 372CB4F21C0418200064F4DE /* Build configuration list for PBXNativeTarget "Light SwitchUITests" */;
+			buildPhases = (
+				372CB4DF1C0418200064F4DE /* Sources */,
+				372CB4E01C0418200064F4DE /* Frameworks */,
+				372CB4E11C0418200064F4DE /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				372CB4E51C0418200064F4DE /* PBXTargetDependency */,
+			);
+			name = "Light SwitchUITests";
+			productName = "Light SwitchUITests";
+			productReference = 372CB4E31C0418200064F4DE /* Light SwitchUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		372CB4B41C0418200064F4DE /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0710;
+				ORGANIZATIONNAME = "Greg Paton";
+				TargetAttributes = {
+					372CB4BB1C0418200064F4DE = {
+						CreatedOnToolsVersion = 7.1.1;
+						DevelopmentTeam = 4UDF68884M;
+					};
+					372CB4D71C0418200064F4DE = {
+						CreatedOnToolsVersion = 7.1.1;
+						DevelopmentTeam = 4UDF68884M;
+						TestTargetID = 372CB4BB1C0418200064F4DE;
+					};
+					372CB4E21C0418200064F4DE = {
+						CreatedOnToolsVersion = 7.1.1;
+						DevelopmentTeam = 4UDF68884M;
+						TestTargetID = 372CB4BB1C0418200064F4DE;
+					};
+				};
+			};
+			buildConfigurationList = 372CB4B71C0418200064F4DE /* Build configuration list for PBXProject "Light Switch" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 372CB4B31C0418200064F4DE;
+			productRefGroup = 372CB4BD1C0418200064F4DE /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				372CB4BB1C0418200064F4DE /* Light Switch */,
+				372CB4D71C0418200064F4DE /* Light SwitchTests */,
+				372CB4E21C0418200064F4DE /* Light SwitchUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		372CB4BA1C0418200064F4DE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				372CB4D21C0418200064F4DE /* LaunchScreen.storyboard in Resources */,
+				372CB4CF1C0418200064F4DE /* Assets.xcassets in Resources */,
+				372CB4CA1C0418200064F4DE /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		372CB4D61C0418200064F4DE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		372CB4E11C0418200064F4DE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		372CB4B81C0418200064F4DE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				372CB4C71C0418200064F4DE /* ViewController.m in Sources */,
+				372CB4C41C0418200064F4DE /* AppDelegate.m in Sources */,
+				372CB4CD1C0418200064F4DE /* Light_Switch.xcdatamodeld in Sources */,
+				372CB4C11C0418200064F4DE /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		372CB4D41C0418200064F4DE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				372CB4DD1C0418200064F4DE /* Light_SwitchTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		372CB4DF1C0418200064F4DE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				372CB4E81C0418200064F4DE /* Light_SwitchUITests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		372CB4DA1C0418200064F4DE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 372CB4BB1C0418200064F4DE /* Light Switch */;
+			targetProxy = 372CB4D91C0418200064F4DE /* PBXContainerItemProxy */;
+		};
+		372CB4E51C0418200064F4DE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 372CB4BB1C0418200064F4DE /* Light Switch */;
+			targetProxy = 372CB4E41C0418200064F4DE /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		372CB4C81C0418200064F4DE /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				372CB4C91C0418200064F4DE /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		372CB4D01C0418200064F4DE /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				372CB4D11C0418200064F4DE /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		372CB4EA1C0418200064F4DE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		372CB4EB1C0418200064F4DE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		372CB4ED1C0418200064F4DE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = "Light Switch/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "GSP.Light-Switch";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		372CB4EE1C0418200064F4DE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = "Light Switch/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "GSP.Light-Switch";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		372CB4F01C0418200064F4DE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = "Light SwitchTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "GSP.Light-SwitchTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Light Switch.app/Light Switch";
+			};
+			name = Debug;
+		};
+		372CB4F11C0418200064F4DE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = "Light SwitchTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "GSP.Light-SwitchTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Light Switch.app/Light Switch";
+			};
+			name = Release;
+		};
+		372CB4F31C0418200064F4DE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = "Light SwitchUITests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "GSP.Light-SwitchUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = "Light Switch";
+				USES_XCTRUNNER = YES;
+			};
+			name = Debug;
+		};
+		372CB4F41C0418200064F4DE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = "Light SwitchUITests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "GSP.Light-SwitchUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = "Light Switch";
+				USES_XCTRUNNER = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		372CB4B71C0418200064F4DE /* Build configuration list for PBXProject "Light Switch" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				372CB4EA1C0418200064F4DE /* Debug */,
+				372CB4EB1C0418200064F4DE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		372CB4EC1C0418200064F4DE /* Build configuration list for PBXNativeTarget "Light Switch" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				372CB4ED1C0418200064F4DE /* Debug */,
+				372CB4EE1C0418200064F4DE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		372CB4EF1C0418200064F4DE /* Build configuration list for PBXNativeTarget "Light SwitchTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				372CB4F01C0418200064F4DE /* Debug */,
+				372CB4F11C0418200064F4DE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		372CB4F21C0418200064F4DE /* Build configuration list for PBXNativeTarget "Light SwitchUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				372CB4F31C0418200064F4DE /* Debug */,
+				372CB4F41C0418200064F4DE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		372CB4CB1C0418200064F4DE /* Light_Switch.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				372CB4CC1C0418200064F4DE /* Light_Switch.xcdatamodel */,
+			);
+			currentVersion = 372CB4CC1C0418200064F4DE /* Light_Switch.xcdatamodel */;
+			path = Light_Switch.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = 372CB4B41C0418200064F4DE /* Project object */;
+}
