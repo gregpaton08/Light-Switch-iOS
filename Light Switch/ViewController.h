@@ -8,8 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ViewController : UIViewController
+@interface ViewController : UIViewController <NSURLSessionDataDelegate, NSURLSessionTaskDelegate>
 
+@property (strong, nonatomic) IBOutlet UIButton *buttonPressLightOn;
+@property (strong, nonatomic) IBOutlet UIButton *buttonPressLightOff;
 
 @end
 
