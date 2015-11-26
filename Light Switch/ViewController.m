@@ -27,12 +27,21 @@
 
 
 - (void)lightSwitch:(BOOL)on {
+    // Get the user defaults
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    
+    NSURL *defaultURL = [userDefaults URLForKey:@"url"];
+    //NSURL *url;// = [defaultURL URLByAppendingPathComponent:@"/light_on"];
     NSString *urlString;
     if (on) {
         urlString = @"http://192.168.0.105:3333/light_on";
+        //url = [NSURL URLWithString:@"192.168.0.105:3333/light_on"];
+        //url = [defaultURL URLByAppendingPathComponent:@"/light_on"];
     }
     else {
         urlString = @"http://192.168.0.105:3333/light_off";
+        //url = [NSURL URLWithString:@"192.168.0.105:3333/light_off"];
+        //url = [defaultURL URLByAppendingPathComponent:@"/light_off"];
     }
     
     NSURLSessionConfiguration *config = [NSURLSessionConfiguration defaultSessionConfiguration];
@@ -40,7 +49,6 @@
     
     NSURL *url = [NSURL URLWithString:urlString];
     NSURLSessionDataTask *downloadTask = [session dataTaskWithURL:url];
-    //NSURLSessionDataTask *downloadTask = [[NSURLSession sharedSession] dataTaskWithURL:url];
     [downloadTask resume];
 }
 

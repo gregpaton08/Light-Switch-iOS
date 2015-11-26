@@ -53,18 +53,21 @@
     NSString *const username = [[self tfUsername] text];
     NSString *const password = [[self tfPassword] text];
     
-    // Check if username in in NSUserDefaults
+    // Get the user defaults
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    
+    // Check if the URL is in user defaults
+    NSURL *defaultURL = [userDefaults URLForKey:@"url"];
+    if (nil == defaultURL) {
+        [userDefaults setURL:url forKey:@"url"];
+        [userDefaults synchronize];
+    }
+    
+    // Check if username in in user defaults
     NSString *defaultUsername = [userDefaults stringForKey:@"username"];
     // Add username to defaults
     if (nil == defaultUsername) {
         [userDefaults setObject:username forKey:@"username"];
-        [userDefaults synchronize];
-    }
-    
-    NSURL *defaultURL = [userDefaults URLForKey:@"url"];
-    if (nil == defaultURL) {
-        [userDefaults setURL:url forKey:@"url"];
         [userDefaults synchronize];
     }
     
