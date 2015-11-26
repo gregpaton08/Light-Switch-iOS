@@ -21,13 +21,13 @@
                                 <rect key="frame" x="174" y="234" width="252" height="30"/>
                                 <animations/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="next"/>
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="BRj-hL-3Xm">
                                 <rect key="frame" x="174" y="285" width="252" height="30"/>
                                 <animations/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="done" secureTextEntry="YES"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mtL-Ji-c0B">
                                 <rect key="frame" x="281" y="363" width="38" height="30"/>
@@ -37,12 +37,19 @@
                                     <action selector="login:" destination="dCO-HN-IPZ" eventType="touchUpInside" id="zMH-8H-hIj"/>
                                 </connections>
                             </button>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="IP Address" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="HkZ-6y-owm">
+                                <rect key="frame" x="174" y="183" width="252" height="30"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="numbersAndPunctuation" returnKeyType="next"/>
+                            </textField>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <connections>
                         <outlet property="tfPassword" destination="BRj-hL-3Xm" id="TgT-Ey-nA8"/>
+                        <outlet property="tfURL" destination="HkZ-6y-owm" id="6Mi-b0-Diq"/>
                         <outlet property="tfUsername" destination="9P5-XI-sJZ" id="eWf-86-Jj0"/>
                         <segue destination="BYZ-38-t0r" kind="show" identifier="loginSuccess" id="LpG-4P-EuD"/>
                     </connections>
