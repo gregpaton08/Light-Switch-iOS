@@ -68,9 +68,9 @@
         [userDefaults synchronize];
     }
     
-    //KeychainWrapper *keychainWrapper = [KeychainWrapper init];
-    //[keychainWrapper mySetObject:password forKey:kSecValueData];
-    //[keychainWrapper writeToKeychain];
+    KeychainWrapper *keychainWrapper = [[KeychainWrapper alloc] init];
+    [keychainWrapper mySetObject:password forKey:(__bridge id)kSecValueData];
+    [keychainWrapper writeToKeychain];
     
     [self performSegueWithIdentifier:@"loginSuccess" sender:self];
 }
