@@ -7,6 +7,7 @@
 //
 
 #import "ViewController.h"
+#import "KeychainWrapper.h"
 
 @interface ViewController ()
 
@@ -58,7 +59,11 @@
 
 - (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didReceiveChallenge:(NSURLAuthenticationChallenge *)challenge completionHandler:(void (^)(NSURLSessionAuthChallengeDisposition, NSURLCredential * _Nullable))completionHandler
 {
-    NSURLCredential *credentials = [NSURLCredential credentialWithUser:@"gpaton" password:@"" persistence:NSURLCredentialPersistenceNone];
+    KeychainWrapper *keychainWrapper = [[KeychainWrapper alloc] init];
+    NSString *password = [keychainWrapper myObjectForKey:(__bridge id)kSecValueData];
+    //[keychainWrapper mySetObject:password forKey:(__bridge id)kSecValueData];
+    
+    NSURLCredential *credentials = [NSURLCredential credentialWithUser:@"gpaton" password:password persistence:NSURLCredentialPersistenceNone];
     completionHandler(NSURLSessionAuthChallengeUseCredential, credentials);
 }
 
