@@ -49,27 +49,24 @@
 
 - (IBAction)login:(id)sender {
     // Get URL, username, and password
-    NSURL *const url = [NSURL URLWithString:[[self tfURL] text]];
+    NSString *urlString = [[self tfURL] text]; //[NSURL URLWithString:[[self tfURL] text]];
+    if (false == [[[urlString substringToIndex:4] lowercaseString] isEqualToString:@"http"]) {
+        urlString = [NSString stringWithFormat:@"http://%@", urlString];
+    }
+    NSURL *const url = [NSURL URLWithString:urlString];
     NSString *const username = [[self tfUsername] text];
     NSString *const password = [[self tfPassword] text];
     
     // Get the user defaults
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     
-    // Check if the URL is in user defaults
-    NSURL *defaultURL = [userDefaults URLForKey:@"url"];
-    if (nil == defaultURL) {
-        [userDefaults setURL:url forKey:@"url"];
-        [userDefaults synchronize];
-    }
+    // Update URL is in user defaults
+    [userDefaults setURL:url forKey:@"url"];
+    [userDefaults synchronize];
     
-    // Check if username in in user defaults
-    NSString *defaultUsername = [userDefaults stringForKey:@"username"];
-    // Add username to defaults
-    if (nil == defaultUsername) {
-        [userDefaults setObject:username forKey:@"username"];
-        [userDefaults synchronize];
-    }
+    // Update username in in user defaults
+    [userDefaults setObject:username forKey:@"username"];
+    [userDefaults synchronize];
     
     KeychainWrapper *keychainWrapper = [[KeychainWrapper alloc] init];
     [keychainWrapper mySetObject:password forKey:(__bridge id)kSecValueData];
