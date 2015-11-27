@@ -107,6 +107,7 @@
     if (false == [[[urlString substringToIndex:4] lowercaseString] isEqualToString:@"http"]) {
         urlString = [NSString stringWithFormat:@"http://%@", urlString];
     }
+    
     // If ip address is local/private then check that wifi is on
     if ([urlString containsString:@"192.168"]) {
         if ([[Reachability reachabilityForInternetConnection] currentReachabilityStatus] != ReachableViaWiFi) {
@@ -126,6 +127,7 @@
             return;
         }
     }
+    
     NSURL *const url = [NSURL URLWithString:urlString];
     NSString *const username = [[self tfUsername] text];
     NSString *const password = [[self tfPassword] text];
