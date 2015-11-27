@@ -31,7 +31,7 @@
     // Get the user defaults
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     
-    NSURL *defaultURL = [userDefaults URLForKey:@"url"];
+    NSURL *defaultURL = [userDefaults URLForKey:LSKeyURL];
     NSURL *url;
     if (on) {
         url = [defaultURL URLByAppendingPathComponent:@"/light_on"];
@@ -60,7 +60,7 @@
     // Get username from user defaults
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     NSString *service = [userDefaults stringForKey:LSKeyService];
-    NSString *username = [userDefaults stringForKey:@"username"];
+    NSString *username = [userDefaults stringForKey:LSKeyUsername];
     
     // Get password from keychain
     NSString *password = [SSKeychain passwordForService:service account:username];
