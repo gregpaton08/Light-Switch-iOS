@@ -46,6 +46,10 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="numbersAndPunctuation" returnKeyType="next"/>
                             </textField>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="sdw-UQ-gWL">
+                                <rect key="frame" x="253" y="368" width="20" height="20"/>
+                                <animations/>
+                            </activityIndicatorView>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -55,6 +59,8 @@
                         </connections>
                     </view>
                     <connections>
+                        <outlet property="activityIndicatorLogin" destination="sdw-UQ-gWL" id="8Es-Lz-Fco"/>
+                        <outlet property="buttonLogin" destination="mtL-Ji-c0B" id="zqK-0Q-ZD5"/>
                         <outlet property="tfPassword" destination="BRj-hL-3Xm" id="TgT-Ey-nA8"/>
                         <outlet property="tfURL" destination="HkZ-6y-owm" id="6Mi-b0-Diq"/>
                         <outlet property="tfUsername" destination="9P5-XI-sJZ" id="eWf-86-Jj0"/>

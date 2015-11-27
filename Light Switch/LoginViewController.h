@@ -15,6 +15,8 @@
 @property (strong, nonatomic) IBOutlet UITextField *tfURL;
 @property (strong, nonatomic) IBOutlet UITextField *tfUsername;
 @property (strong, nonatomic) IBOutlet UITextField *tfPassword;
+@property (strong, nonatomic) IBOutlet UIButton *buttonLogin;
+@property (strong, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicatorLogin;
 
 - (IBAction)login:(id)sender;
 - (IBAction)textFieldPasswordReturn:(id)sender;

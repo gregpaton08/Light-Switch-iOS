@@ -61,15 +61,13 @@
     NSURLSession *session = [NSURLSession sessionWithConfiguration:config delegate:self delegateQueue:nil];
     
     NSURLSessionDataTask *downloadTask = [session dataTaskWithURL:defaultURL];
-//    NSURLSessionDataTask *downloadTask = [session dataTaskWithURL:defaultURL
-//                                                completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-//                                                    NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
-//                                                    NSLog(@"%@", json);
-//                                                }];
     [downloadTask resume];
 }
 
 - (void)userLogin {
+    [[self buttonLogin] setEnabled:NO];
+    [[self activityIndicatorLogin] startAnimating];
+    
     // Get URL, username, and password
     NSString *urlString = [[self tfURL] text]; //[NSURL URLWithString:[[self tfURL] text]];
     if (false == [[[urlString substringToIndex:4] lowercaseString] isEqualToString:@"http"]) {
@@ -140,6 +138,12 @@
 }
 
 - (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didCompleteWithError:(NSError *)error {
+    // Stop progress animation
+    [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+        [[self buttonLogin] setEnabled:YES];
+        [[self activityIndicatorLogin] stopAnimating];
+    }];
+    
     if (nil == error) {
         [[NSOperationQueue mainQueue] addOperationWithBlock:^{
             [self performSegueWithIdentifier:@"loginSuccess" sender:self];
