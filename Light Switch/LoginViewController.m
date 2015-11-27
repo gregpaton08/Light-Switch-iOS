@@ -109,12 +109,16 @@
         completionHandler(NSURLSessionAuthChallengeUseCredential, credentials);
     }
     else {
-        UIAlertController *incorrectPasswordAlert = [[UIAlertController alloc] initWithNibName:@"TEST" bundle:nil];
-        //[incorrectPasswordAlert showDetailViewController:<#(nonnull UIViewController *)#> sender:<#(nullable id)#>]
-        //UIAlertView *alertReset = [[UIAlertView alloc] initWithTitle:@"About to Reset Timer" message:@"Continue?" delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Yes", nil];
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Incorrect username or password" message:@"Try again" preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *action = [UIAlertAction actionWithTitle:@"Okay" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {}];
+        [alert addAction:action];
+        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+            [self presentViewController:alert animated:YES completion:nil];
+        }];
         
         completionHandler(NSURLSessionAuthChallengeCancelAuthenticationChallenge, nil);
         _sessionFailureCount = 0;
+        
         return;
     }
     
