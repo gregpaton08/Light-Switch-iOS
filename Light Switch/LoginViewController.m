@@ -64,7 +64,7 @@
     //[self performSegueWithIdentifier:@"loginSuccess" sender:self];
 }
 
-- (IBAction)login:(id)sender {
+- (void)userLogin {
     // Get URL, username, and password
     NSString *urlString = [[self tfURL] text]; //[NSURL URLWithString:[[self tfURL] text]];
     if (false == [[[urlString substringToIndex:4] lowercaseString] isEqualToString:@"http"]) {
@@ -91,6 +91,15 @@
     
     //[self performSegueWithIdentifier:@"loginSuccess" sender:self];
     [self authenticateUser];
+}
+
+- (IBAction)login:(id)sender {
+    [self userLogin];
+}
+
+- (IBAction)textFieldPasswordReturn:(id)sender {
+    [sender resignFirstResponder];
+    [self userLogin];
 }
 
 - (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didReceiveChallenge:(NSURLAuthenticationChallenge *)challenge completionHandler:(void (^)(NSURLSessionAuthChallengeDisposition, NSURLCredential * _Nullable))completionHandler
@@ -131,6 +140,10 @@
             [self performSegueWithIdentifier:@"loginSuccess" sender:self];
         }];
     }
+}
+
+- (IBAction)backgroundTouch:(id)sender {
+    [self.view endEditing:YES];
 }
 
 @end
