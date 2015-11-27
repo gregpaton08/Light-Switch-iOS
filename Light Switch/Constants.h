@@ -19,3 +19,5 @@ FOUNDATION_EXPORT NSString *const LSKeyURL;
 FOUNDATION_EXPORT NSString *const LSKeyURLTID;
 FOUNDATION_EXPORT NSString *const LSKeyTouchIDCredentials;
 
+FOUNDATION_EXPORT NSString *const LSServiceLogin;
+FOUNDATION_EXPORT NSString *const LSServiceLoginTID;

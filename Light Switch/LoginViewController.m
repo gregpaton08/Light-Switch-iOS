@@ -91,10 +91,43 @@
 - (void)promptToUseTouchIDWithCompletion:(void (^)(void))completion {
     // Get the user defaults
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    NSURL *defaultURL = [userDefaults URLForKey:LSKeyURL];
+    NSString *username = [userDefaults stringForKey:LSKeyUsername];
+    NSString *service = [userDefaults stringForKey:LSKeyServiceCurrent];
     
-    BOOL useTouchID = [userDefaults boolForKey:LSKeyTouchIDCredentials];
-    if (!useTouchID) {
-        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Store these credentials with Touch ID?" message:@"Any user with Touch ID will be able to login" preferredStyle:UIAlertControllerStyleAlert];
+    BOOL promptUser = NO;
+    NSString *title;
+    NSString *message;
+    if (false == [service isEqualToString:LSServiceLoginTID]) {
+        NSString *password = [SSKeychain passwordForService:service account:username];
+        NSString *passwordTouchID = [SSKeychain passwordForService:LSKeyServiceTID account:username];
+        
+        BOOL useTouchID = [userDefaults boolForKey:LSKeyTouchIDCredentials];
+        
+        if (false == useTouchID) {
+            title = @"Store these credentials with Touch ID?";
+            message = @"Any user with Touch ID will be able to login";
+            promptUser = YES;
+        }
+        else if (false == [defaultURL isEqual:[userDefaults URLForKey:LSKeyURLTID]]) {
+            title = @"Update credentials for Touch ID?";
+            message = @"Credentials have changed";
+            promptUser = YES;
+        }
+        else if (false == [username isEqualToString:[userDefaults stringForKey:LSKeyUsernameTID]]) {
+            title = @"Update credentials for Touch ID?";
+            message = @"Credentials have changed";
+            promptUser = YES;
+        }
+        else if (false == [password isEqualToString:passwordTouchID]) {
+            title = @"Update credentials for Touch ID?";
+            message = @"Credentials have changed";
+            promptUser = YES;
+        }
+    }
+    
+    if (promptUser) {
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction *actionYes = [UIAlertAction actionWithTitle:@"Yes" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
             // Save URL for touch ID
             NSURL *defaultURL = [userDefaults URLForKey:LSKeyURL];
