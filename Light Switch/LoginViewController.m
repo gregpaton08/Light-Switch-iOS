@@ -7,7 +7,6 @@
 //
 
 #import "LoginViewController.h"
-#import "KeychainWrapper.h"
 #import "Reachability.h"
 #import "SSKeychain.h"
 #import "Constants.h"
@@ -38,15 +37,19 @@
         [[self tfUsername] setText:defaultUsername];
     }
     
-    if (defaultURL && defaultUsername && [userDefaults boolForKey:@"appLaunch"] && [userDefaults boolForKey:@"storeCredentialsTouchID"]) {
+    if ([userDefaults stringForKey:LSKeyServiceTID] &&
+        [userDefaults stringForKey:LSKeyUsernameTID] &&
+        [userDefaults stringForKey:LSKeyURLTID] &&
+        [userDefaults boolForKey:@"appLaunch"] &&
+        [userDefaults boolForKey:@"storeCredentialsTouchID"]) {
         [self userLoginTouchID];
-        [userDefaults setBool:NO forKey:@"appLaunch"];
-        [userDefaults synchronize];
     }
-    
-    if (false == [userDefaults boolForKey:@"storeCredentialsTouchID"]) {
+    else if (false == [userDefaults boolForKey:@"storeCredentialsTouchID"]) {
         [[self buttonTouchID] setEnabled:NO];
     }
+    
+    [userDefaults setBool:NO forKey:@"appLaunch"];
+    [userDefaults synchronize];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -280,6 +283,14 @@
     
     if (nil == error) {
         [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+            // Update user defaults for service and user
+            NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+            NSString *service = [userDefaults stringForKey:LSKeyServiceCurrent];
+            NSString *username = [userDefaults stringForKey:LSKeyUsernameCurrent];
+            [userDefaults setObject:service forKey:LSKeyService];
+            [userDefaults setObject:username forKey:LSKeyUsername];
+            [userDefaults synchronize];
+            
             [self promptToUseTouchIDWithCompletion:^{
                 [self performSegueWithIdentifier:@"loginSuccess" sender:self];
             }];

@@ -7,7 +7,8 @@
 //
 
 #import "ViewController.h"
-#import "KeychainWrapper.h"
+#import "Constants.h"
+#import "SSKeychain.h"
 
 @interface ViewController ()
 
@@ -58,15 +59,17 @@
 {
     // Get username from user defaults
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    NSString *service = [userDefaults stringForKey:LSKeyService];
     NSString *username = [userDefaults stringForKey:@"username"];
     
     // Get password from keychain
-    KeychainWrapper *keychainWrapper = [[KeychainWrapper alloc] init];
-    NSString *password = [keychainWrapper myObjectForKey:(__bridge id)kSecValueData];
+    NSString *password = [SSKeychain passwordForService:service account:username];
     
     // Authenticate user
     NSURLCredential *credentials = [NSURLCredential credentialWithUser:username password:password persistence:NSURLCredentialPersistenceNone];
     completionHandler(NSURLSessionAuthChallengeUseCredential, credentials);
+    
+    // TODO: handle authenctication failure case
 }
 
 - (IBAction)buttonPressLogout:(id)sender {
