@@ -89,11 +89,10 @@
     // Get the user defaults
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     
-    BOOL useTouchID = [userDefaults boolForKey:@"storeCredentialsTouchID"];
+    BOOL useTouchID = [userDefaults boolForKey:LSKeyTouchIDCredentials];
     if (!useTouchID) {
         UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Store these credentials with Touch ID?" message:@"Any user with Touch ID will be able to login" preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction *actionYes = [UIAlertAction actionWithTitle:@"Yes" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-            //[[NSOperationQueue mainQueue] addOperationWithBlock:^{
             // Save URL for touch ID
             NSURL *defaultURL = [userDefaults URLForKey:LSKeyURL];
             [userDefaults setURL:defaultURL forKey:LSKeyURLTID];
@@ -105,15 +104,20 @@
             // Save password for touch ID
             NSString *password = [SSKeychain passwordForService:LSKeyService account:username];
             [SSKeychain setPassword:password forService:LSKeyServiceTID account:username];
-            //}];
+            
+            // Update defaults to flag that touch ID credentials are in use
+            [userDefaults setBool:YES forKey:LSKeyTouchIDCredentials];
+            [userDefaults synchronize];
+            
+            completion();
         }];
-        UIAlertAction *actionNo = [UIAlertAction actionWithTitle:@"No" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {}];
+        UIAlertAction *actionNo = [UIAlertAction actionWithTitle:@"No" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            completion();
+        }];
         
         [alert addAction:actionYes];
         [alert addAction:actionNo];
-        [self presentViewController:alert animated:YES completion:^{
-            completion();
-        }];
+        [self presentViewController:alert animated:YES completion:^{}];
     }
     else {
         completion();

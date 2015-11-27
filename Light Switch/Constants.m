@@ -16,3 +16,4 @@ NSString *const LSKeyServiceTID = @"loginTouchID";
 NSString *const LSKeyServiceCurrent = @"loginCurrent";
 NSString *const LSKeyURL = @"url";
 NSString *const LSKeyURLTID = @"urlTouchID";
+NSString *const LSKeyTouchIDCredentials = @"storeCredentialsTouchID";
