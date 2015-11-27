@@ -36,7 +36,11 @@
         [[self tfUsername] setText:defaultUsername];
     }
     
-    [self userLoginTouchID];
+    if ([userDefaults boolForKey:@"appLaunch"]) {
+        [self userLoginTouchID];
+        [userDefaults setBool:NO forKey:@"appLaunch"];
+        [userDefaults synchronize];
+    }
 }
 
 - (void)didReceiveMemoryWarning {
@@ -204,7 +208,6 @@
     
     if (nil == error) {
         [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-            //[self promptToUseTouchID];
             [self performSegueWithIdentifier:@"loginSuccess" sender:self];
         }];
     }
