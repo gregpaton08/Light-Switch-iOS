@@ -19,9 +19,6 @@
 @property (strong, nonatomic) IBOutlet UIButton *buttonTouchID;
 @property (strong, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicatorLogin;
 
-@property (copy) NSMutableString *currentService;
-@property (copy) NSMutableString *currentUsername;
-
 - (IBAction)login:(id)sender;
 - (IBAction)loginTouchID:(id)sender;
 - (IBAction)textFieldPasswordReturn:(id)sender;

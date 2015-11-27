@@ -28,7 +28,7 @@
     
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     
-    NSURL *defaultURL = [userDefaults URLForKey:@"url"];
+    NSURL *defaultURL = [userDefaults URLForKey:LSKeyURL];
     if (defaultURL) {
         [[self tfURL] setText:[defaultURL absoluteString]];
     }
@@ -66,8 +66,12 @@
 
 - (void)authenticateUser:(NSString*)user forService:(NSString*)service withURL:(NSURL*)url {
     _sessionFailureCount = 0;
-    [[self currentUsername] setString:user];
-    [[self currentService] setString:service];
+    
+    // Set current service and username
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    [userDefaults setObject:service forKey:LSKeyServiceCurrent];
+    [userDefaults setObject:user forKey:LSKeyUsernameCurrent];
+    [userDefaults synchronize];
     
     NSURLSessionConfiguration *config = [NSURLSessionConfiguration defaultSessionConfiguration];
     NSURLSession *session = [NSURLSession sessionWithConfiguration:config delegate:self delegateQueue:nil];
@@ -91,8 +95,8 @@
         UIAlertAction *actionYes = [UIAlertAction actionWithTitle:@"Yes" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
             //[[NSOperationQueue mainQueue] addOperationWithBlock:^{
             // Save URL for touch ID
-            NSURL *defaultURL = [userDefaults URLForKey:@"url"];
-            [userDefaults setURL:defaultURL forKey:@"urlTouchID"];
+            NSURL *defaultURL = [userDefaults URLForKey:LSKeyURL];
+            [userDefaults setURL:defaultURL forKey:LSKeyURLTID];
             
             // Save username for touch ID
             NSString *username = [userDefaults stringForKey:LSKeyUsername];
@@ -140,7 +144,7 @@
 
 - (void)userLoginTouchID {
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    NSURL *url = [userDefaults URLForKey:@"urlTouchID"];
+    NSURL *url = [userDefaults URLForKey:LSKeyURLTID];
     if (nil == url) {
         // TODO: handle error
         return;
@@ -161,7 +165,7 @@
         LAContext *context = [[LAContext alloc] init];
         [context evaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics localizedReason:@"Authenticate to login" reply:^(BOOL success, NSError *authenticationError) {
             if (success) {
-                [self authenticateUser:username forService:@"loginTouchID" withURL:url];
+                [self authenticateUser:username forService:LSKeyServiceTID withURL:url];
             }
             else {
                 // TODO: handle failure case
@@ -198,7 +202,7 @@
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     
     // Update URL is in user defaults
-    [userDefaults setURL:url forKey:@"url"];
+    [userDefaults setURL:url forKey:LSKeyURL];
     [userDefaults synchronize];
     
     // Update username in in user defaults
@@ -206,10 +210,10 @@
     [userDefaults synchronize];
     
     // Store the password in the keychain
-    [SSKeychain setPassword:password forService:@"login" account:username];
+    [SSKeychain setPassword:password forService:LSKeyService account:username];
     
     // Authenticate the user
-    [self authenticateUser:username forService:@"login" withURL:url];
+    [self authenticateUser:username forService:LSKeyService withURL:url];
 }
 
 - (IBAction)login:(id)sender {
@@ -229,8 +233,9 @@
 {
     if (0 == _sessionFailureCount) {
         // Get username and service
-        NSString *service = [self currentService];
-        NSString *username = [self currentUsername];
+        NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+        NSString *service = [userDefaults stringForKey:LSKeyServiceCurrent];
+        NSString *username = [userDefaults stringForKey:LSKeyUsernameCurrent];
         
         // Get password from keychain
         NSString *password = [SSKeychain passwordForService:service account:username];
@@ -267,6 +272,10 @@
     if (nil == error) {
         [[NSOperationQueue mainQueue] addOperationWithBlock:^{
             [self promptToUseTouchID];
+            //[self performSegueWithIdentifier:@"loginSuccess" sender:self];
+        }];
+        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+            //[self promptToUseTouchID];
             [self performSegueWithIdentifier:@"loginSuccess" sender:self];
         }];
     }
