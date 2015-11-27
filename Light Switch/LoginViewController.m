@@ -85,7 +85,7 @@
     return [context canEvaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics error:nil];
 }
 
-- (void)promptToUseTouchID {
+- (void)promptToUseTouchIDWithCompletion:(void (^)(void))completion {
     // Get the user defaults
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     
@@ -111,7 +111,12 @@
         
         [alert addAction:actionYes];
         [alert addAction:actionNo];
-        [self presentViewController:alert animated:YES completion:nil];
+        [self presentViewController:alert animated:YES completion:^{
+            completion();
+        }];
+    }
+    else {
+        completion();
     }
 }
 
@@ -271,12 +276,9 @@
     
     if (nil == error) {
         [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-            [self promptToUseTouchID];
-            //[self performSegueWithIdentifier:@"loginSuccess" sender:self];
-        }];
-        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-            //[self promptToUseTouchID];
-            [self performSegueWithIdentifier:@"loginSuccess" sender:self];
+            [self promptToUseTouchIDWithCompletion:^{
+                [self performSegueWithIdentifier:@"loginSuccess" sender:self];
+            }];
         }];
     }
     else {
