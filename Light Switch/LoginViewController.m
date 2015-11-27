@@ -10,6 +10,7 @@
 #import "KeychainWrapper.h"
 #import "Reachability.h"
 #import "SSKeychain.h"
+#import "Constants.h"
 
 @import LocalAuthentication;
 
@@ -32,7 +33,7 @@
         [[self tfURL] setText:[defaultURL absoluteString]];
     }
     
-    NSString *defaultUsername = [userDefaults stringForKey:@"username"];
+    NSString *defaultUsername = [userDefaults stringForKey:LSKeyUsername];
     if (defaultUsername) {
         [[self tfUsername] setText:defaultUsername];
     }
@@ -63,17 +64,16 @@
 }
 */
 
-- (void)authenticateUser {
+- (void)authenticateUser:(NSString*)user forService:(NSString*)service withURL:(NSURL*)url {
     _sessionFailureCount = 0;
-    
-    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    NSURL *defaultURL = [userDefaults URLForKey:@"url"];
+    [[self currentUsername] setString:user];
+    [[self currentService] setString:service];
     
     NSURLSessionConfiguration *config = [NSURLSessionConfiguration defaultSessionConfiguration];
     NSURLSession *session = [NSURLSession sessionWithConfiguration:config delegate:self delegateQueue:nil];
     
-    NSURLSessionDataTask *downloadTask = [session dataTaskWithURL:defaultURL];
-    [downloadTask resume];
+    NSURLSessionDataTask *task = [session dataTaskWithURL:url];
+    [task resume];
 }
 
 - (BOOL)hasTouchID {
@@ -90,13 +90,17 @@
         UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Store these credentials with Touch ID?" message:@"Any user with Touch ID will be able to login" preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction *actionYes = [UIAlertAction actionWithTitle:@"Yes" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
             //[[NSOperationQueue mainQueue] addOperationWithBlock:^{
-                // Save URL for touch ID
-                NSURL *defaultURL = [userDefaults URLForKey:@"url"];
-                [userDefaults setURL:defaultURL forKey:@"urlTouchID"];
-                
-                // Save username for touch ID
-                NSString *username = [userDefaults stringForKey:@"username"];
-                [userDefaults setObject:username forKey:@"usernameTouchID"];
+            // Save URL for touch ID
+            NSURL *defaultURL = [userDefaults URLForKey:@"url"];
+            [userDefaults setURL:defaultURL forKey:@"urlTouchID"];
+            
+            // Save username for touch ID
+            NSString *username = [userDefaults stringForKey:LSKeyUsername];
+            [userDefaults setObject:username forKey:LSKeyUsernameTID];
+        
+            // Save password for touch ID
+            NSString *password = [SSKeychain passwordForService:LSKeyService account:username];
+            [SSKeychain setPassword:password forService:LSKeyServiceTID account:username];
             //}];
         }];
         UIAlertAction *actionNo = [UIAlertAction actionWithTitle:@"No" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {}];
@@ -107,7 +111,47 @@
     }
 }
 
+- (BOOL)hasWifiForURL:(NSURL*)url {
+    NSString *urlString = [url absoluteString];
+    
+    // If ip address is local/private then check that wifi is on
+    if ([urlString containsString:@"192.168"]) {
+        if ([[Reachability reachabilityForInternetConnection] currentReachabilityStatus] != ReachableViaWiFi) {
+            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Not connected to wifi" message:@"Connect to wifi and try again" preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertAction *actionOkay = [UIAlertAction actionWithTitle:@"Okay" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {}];
+            UIAlertAction *actionSettings = [UIAlertAction actionWithTitle:@"Settings" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+                NSURL *url = [NSURL URLWithString:UIApplicationOpenSettingsURLString];
+                [[UIApplication sharedApplication] openURL:url];
+            }];
+            [alert addAction:actionOkay];
+            [alert addAction:actionSettings];
+            [self presentViewController:alert animated:YES completion:nil];
+            
+            [[self buttonLogin] setEnabled:YES];
+            [[self buttonTouchID] setEnabled:YES];
+            [[self activityIndicatorLogin] stopAnimating];
+            
+            return NO;
+        }
+    }
+    
+    return YES;
+}
+
 - (void)userLoginTouchID {
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    NSURL *url = [userDefaults URLForKey:@"urlTouchID"];
+    if (nil == url) {
+        // TODO: handle error
+        return;
+    }
+    NSString *username = [userDefaults stringForKey:LSKeyUsernameTID];
+    
+    // Check that wifi is on if needed
+    if (false == [self hasWifiForURL:url]) {
+        return;
+    }
+    
     // Disable login button and show activity indicator
     [[self buttonLogin] setEnabled:NO];
     [[self buttonTouchID] setEnabled:NO];
@@ -117,7 +161,7 @@
         LAContext *context = [[LAContext alloc] init];
         [context evaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics localizedReason:@"Authenticate to login" reply:^(BOOL success, NSError *authenticationError) {
             if (success) {
-                [self authenticateUser];
+                [self authenticateUser:username forService:@"loginTouchID" withURL:url];
             }
             else {
                 // TODO: handle failure case
@@ -141,30 +185,14 @@
         urlString = [NSString stringWithFormat:@"http://%@", urlString];
     }
     
-    // If ip address is local/private then check that wifi is on
-    if ([urlString containsString:@"192.168"]) {
-        if ([[Reachability reachabilityForInternetConnection] currentReachabilityStatus] != ReachableViaWiFi) {
-            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Not connected to wifi" message:@"Connect to wifi and try again" preferredStyle:UIAlertControllerStyleAlert];
-            UIAlertAction *actionOkay = [UIAlertAction actionWithTitle:@"Okay" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {}];
-            UIAlertAction *actionSettings = [UIAlertAction actionWithTitle:@"Settings" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-                NSURL *url = [NSURL URLWithString:UIApplicationOpenSettingsURLString];
-                [[UIApplication sharedApplication] openURL:url];
-            }];
-            [alert addAction:actionOkay];
-            [alert addAction:actionSettings];
-            [self presentViewController:alert animated:YES completion:nil];
-            
-            [[self buttonLogin] setEnabled:YES];
-            [[self buttonTouchID] setEnabled:YES];
-            [[self activityIndicatorLogin] stopAnimating];
-            
-            return;
-        }
-    }
-    
     NSURL *const url = [NSURL URLWithString:urlString];
     NSString *const username = [[self tfUsername] text];
     NSString *const password = [[self tfPassword] text];
+    
+    // Check that wifi is on if needed
+    if (false == [self hasWifiForURL:url]) {
+        return;
+    }
     
     // Get the user defaults
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
@@ -174,13 +202,14 @@
     [userDefaults synchronize];
     
     // Update username in in user defaults
-    [userDefaults setObject:username forKey:@"username"];
+    [userDefaults setObject:username forKey:LSKeyUsername];
     [userDefaults synchronize];
     
     // Store the password in the keychain
     [SSKeychain setPassword:password forService:@"login" account:username];
     
-    [self authenticateUser];
+    // Authenticate the user
+    [self authenticateUser:username forService:@"login" withURL:url];
 }
 
 - (IBAction)login:(id)sender {
@@ -199,12 +228,12 @@
 - (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didReceiveChallenge:(NSURLAuthenticationChallenge *)challenge completionHandler:(void (^)(NSURLSessionAuthChallengeDisposition, NSURLCredential * _Nullable))completionHandler
 {
     if (0 == _sessionFailureCount) {
-        // Get username from user defaults
-        NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-        NSString *username = [userDefaults stringForKey:@"username"];
+        // Get username and service
+        NSString *service = [self currentService];
+        NSString *username = [self currentUsername];
         
         // Get password from keychain
-        NSString *password = [SSKeychain passwordForService:@"login" account:username];
+        NSString *password = [SSKeychain passwordForService:service account:username];
         
         // Authenticate user
         NSURLCredential *credentials = [NSURLCredential credentialWithUser:username password:password persistence:NSURLCredentialPersistenceNone];

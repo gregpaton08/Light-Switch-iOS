@@ -22,6 +22,7 @@
 		372CB5061C08C8300064F4DE /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 372CB5051C08C8300064F4DE /* Security.framework */; };
 		372CB50B1C08C83D0064F4DE /* SSKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = 372CB5081C08C83D0064F4DE /* SSKeychain.m */; };
 		372CB50C1C08C83D0064F4DE /* SSKeychainQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = 372CB50A1C08C83D0064F4DE /* SSKeychainQuery.m */; };
+		372CB50F1C08D2110064F4DE /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 372CB50E1C08D2110064F4DE /* Constants.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -70,6 +71,8 @@
 		372CB5081C08C83D0064F4DE /* SSKeychain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSKeychain.m; sourceTree = "<group>"; };
 		372CB5091C08C83D0064F4DE /* SSKeychainQuery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSKeychainQuery.h; sourceTree = "<group>"; };
 		372CB50A1C08C83D0064F4DE /* SSKeychainQuery.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSKeychainQuery.m; sourceTree = "<group>"; };
+		372CB50D1C08D2110064F4DE /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
+		372CB50E1C08D2110064F4DE /* Constants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Constants.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -142,6 +145,8 @@
 				372CB4BF1C0418200064F4DE /* Supporting Files */,
 				372CB4F51C06820F0064F4DE /* LoginViewController.h */,
 				372CB4F61C06820F0064F4DE /* LoginViewController.m */,
+				372CB50D1C08D2110064F4DE /* Constants.h */,
+				372CB50E1C08D2110064F4DE /* Constants.m */,
 			);
 			path = "Light Switch";
 			sourceTree = "<group>";
@@ -310,6 +315,7 @@
 				372CB50B1C08C83D0064F4DE /* SSKeychain.m in Sources */,
 				372CB4C41C0418200064F4DE /* AppDelegate.m in Sources */,
 				372CB4CD1C0418200064F4DE /* Light_Switch.xcdatamodeld in Sources */,
+				372CB50F1C08D2110064F4DE /* Constants.m in Sources */,
 				372CB5031C083A490064F4DE /* Reachability.m in Sources */,
 				372CB5001C076DF50064F4DE /* KeychainWrapper.m in Sources */,
 				372CB4C11C0418200064F4DE /* main.m in Sources */,
