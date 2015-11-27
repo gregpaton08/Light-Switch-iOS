@@ -9,6 +9,7 @@
 #import "LoginViewController.h"
 #import "KeychainWrapper.h"
 #import "Reachability.h"
+#import "SSKeychain.h"
 
 @import LocalAuthentication;
 
@@ -36,10 +37,14 @@
         [[self tfUsername] setText:defaultUsername];
     }
     
-    if ([userDefaults boolForKey:@"appLaunch"]) {
+    if (defaultURL && defaultUsername && [userDefaults boolForKey:@"appLaunch"] && [userDefaults boolForKey:@"storeCredentialsTouchID"]) {
         [self userLoginTouchID];
         [userDefaults setBool:NO forKey:@"appLaunch"];
         [userDefaults synchronize];
+    }
+    
+    if (false == [userDefaults boolForKey:@"storeCredentialsTouchID"]) {
+        [[self buttonTouchID] setEnabled:NO];
     }
 }
 
@@ -80,9 +85,25 @@
     // Get the user defaults
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     
-    BOOL useTouchID = [userDefaults boolForKey:@"useTouchID"];
+    BOOL useTouchID = [userDefaults boolForKey:@"storeCredentialsTouchID"];
     if (!useTouchID) {
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Store these credentials with Touch ID?" message:@"Any user with Touch ID will be able to login" preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *actionYes = [UIAlertAction actionWithTitle:@"Yes" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            //[[NSOperationQueue mainQueue] addOperationWithBlock:^{
+                // Save URL for touch ID
+                NSURL *defaultURL = [userDefaults URLForKey:@"url"];
+                [userDefaults setURL:defaultURL forKey:@"urlTouchID"];
+                
+                // Save username for touch ID
+                NSString *username = [userDefaults stringForKey:@"username"];
+                [userDefaults setObject:username forKey:@"usernameTouchID"];
+            //}];
+        }];
+        UIAlertAction *actionNo = [UIAlertAction actionWithTitle:@"No" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {}];
         
+        [alert addAction:actionYes];
+        [alert addAction:actionNo];
+        [self presentViewController:alert animated:YES completion:nil];
     }
 }
 
@@ -156,9 +177,8 @@
     [userDefaults setObject:username forKey:@"username"];
     [userDefaults synchronize];
     
-    KeychainWrapper *keychainWrapper = [[KeychainWrapper alloc] init];
-    [keychainWrapper mySetObject:password forKey:(__bridge id)kSecValueData];
-    [keychainWrapper writeToKeychain];
+    // Store the password in the keychain
+    [SSKeychain setPassword:password forService:@"login" account:username];
     
     [self authenticateUser];
 }
@@ -184,8 +204,7 @@
         NSString *username = [userDefaults stringForKey:@"username"];
         
         // Get password from keychain
-        KeychainWrapper *keychainWrapper = [[KeychainWrapper alloc] init];
-        NSString *password = [keychainWrapper myObjectForKey:(__bridge id)kSecValueData];
+        NSString *password = [SSKeychain passwordForService:@"login" account:username];
         
         // Authenticate user
         NSURLCredential *credentials = [NSURLCredential credentialWithUser:username password:password persistence:NSURLCredentialPersistenceNone];
@@ -218,11 +237,12 @@
     
     if (nil == error) {
         [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+            [self promptToUseTouchID];
             [self performSegueWithIdentifier:@"loginSuccess" sender:self];
         }];
     }
     else {
-        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Unable to connect to server" message:@"Please check network connection" preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Unable to connect to server" message:@"Please check URL and network connection" preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction *action = [UIAlertAction actionWithTitle:@"Okay" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {}];
         [alert addAction:action];
         [[NSOperationQueue mainQueue] addOperationWithBlock:^{

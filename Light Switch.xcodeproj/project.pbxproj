@@ -19,6 +19,9 @@
 		372CB4F71C06820F0064F4DE /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 372CB4F61C06820F0064F4DE /* LoginViewController.m */; };
 		372CB5001C076DF50064F4DE /* KeychainWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 372CB4FF1C076DF50064F4DE /* KeychainWrapper.m */; };
 		372CB5031C083A490064F4DE /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 372CB5021C083A490064F4DE /* Reachability.m */; };
+		372CB5061C08C8300064F4DE /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 372CB5051C08C8300064F4DE /* Security.framework */; };
+		372CB50B1C08C83D0064F4DE /* SSKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = 372CB5081C08C83D0064F4DE /* SSKeychain.m */; };
+		372CB50C1C08C83D0064F4DE /* SSKeychainQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = 372CB50A1C08C83D0064F4DE /* SSKeychainQuery.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -62,6 +65,11 @@
 		372CB4FF1C076DF50064F4DE /* KeychainWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeychainWrapper.m; sourceTree = "<group>"; };
 		372CB5011C083A490064F4DE /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		372CB5021C083A490064F4DE /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
+		372CB5051C08C8300064F4DE /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		372CB5071C08C83D0064F4DE /* SSKeychain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSKeychain.h; sourceTree = "<group>"; };
+		372CB5081C08C83D0064F4DE /* SSKeychain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSKeychain.m; sourceTree = "<group>"; };
+		372CB5091C08C83D0064F4DE /* SSKeychainQuery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSKeychainQuery.h; sourceTree = "<group>"; };
+		372CB50A1C08C83D0064F4DE /* SSKeychainQuery.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSKeychainQuery.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,6 +77,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				372CB5061C08C8300064F4DE /* Security.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -92,6 +101,7 @@
 		372CB4B31C0418200064F4DE = {
 			isa = PBXGroup;
 			children = (
+				372CB5051C08C8300064F4DE /* Security.framework */,
 				372CB4BE1C0418200064F4DE /* Light Switch */,
 				372CB4DB1C0418200064F4DE /* Light SwitchTests */,
 				372CB4E61C0418200064F4DE /* Light SwitchUITests */,
@@ -112,6 +122,10 @@
 		372CB4BE1C0418200064F4DE /* Light Switch */ = {
 			isa = PBXGroup;
 			children = (
+				372CB5071C08C83D0064F4DE /* SSKeychain.h */,
+				372CB5081C08C83D0064F4DE /* SSKeychain.m */,
+				372CB5091C08C83D0064F4DE /* SSKeychainQuery.h */,
+				372CB50A1C08C83D0064F4DE /* SSKeychainQuery.m */,
 				372CB5011C083A490064F4DE /* Reachability.h */,
 				372CB5021C083A490064F4DE /* Reachability.m */,
 				372CB4FE1C076DF40064F4DE /* KeychainWrapper.h */,
@@ -292,6 +306,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				372CB4C71C0418200064F4DE /* ViewController.m in Sources */,
+				372CB50C1C08C83D0064F4DE /* SSKeychainQuery.m in Sources */,
+				372CB50B1C08C83D0064F4DE /* SSKeychain.m in Sources */,
 				372CB4C41C0418200064F4DE /* AppDelegate.m in Sources */,
 				372CB4CD1C0418200064F4DE /* Light_Switch.xcdatamodeld in Sources */,
 				372CB5031C083A490064F4DE /* Reachability.m in Sources */,
