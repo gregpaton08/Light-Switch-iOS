@@ -50,6 +50,14 @@
                                 <rect key="frame" x="253" y="368" width="20" height="20"/>
                                 <animations/>
                             </activityIndicatorView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cDx-3k-hQW">
+                                <rect key="frame" x="267" y="418" width="67" height="67"/>
+                                <animations/>
+                                <state key="normal" title="Button" image="Touch-icon-lg"/>
+                                <connections>
+                                    <action selector="buttonTouchID:" destination="dCO-HN-IPZ" eventType="touchUpInside" id="eJg-MC-naC"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -126,4 +134,7 @@
             <point key="canvasLocation" x="295" y="407"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="Touch-icon-lg" width="138" height="138"/>
+    </resources>
 </document>

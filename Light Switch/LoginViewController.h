@@ -19,6 +19,7 @@
 @property (strong, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicatorLogin;
 
 - (IBAction)login:(id)sender;
+- (IBAction)buttonTouchID:(id)sender;
 - (IBAction)textFieldPasswordReturn:(id)sender;
 - (IBAction)backgroundTouch:(id)sender;
 

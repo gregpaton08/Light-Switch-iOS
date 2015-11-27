@@ -85,7 +85,7 @@
 - (void)userLoginTouchID {
     if ([self hasTouchID]) {
         LAContext *context = [[LAContext alloc] init];
-        [context evaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics localizedReason:@"Unlock access to locked feature" reply:^(BOOL success, NSError *authenticationError) {
+        [context evaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics localizedReason:@"Authenticate to login" reply:^(BOOL success, NSError *authenticationError) {
             if (success) {
                 [[NSOperationQueue mainQueue] addOperationWithBlock:^{
                     [self performSegueWithIdentifier:@"loginSuccess" sender:self];
@@ -151,6 +151,10 @@
 
 - (IBAction)login:(id)sender {
     [self userLogin];
+}
+
+- (IBAction)buttonTouchID:(id)sender {
+    [self userLoginTouchID];
 }
 
 - (IBAction)textFieldPasswordReturn:(id)sender {
