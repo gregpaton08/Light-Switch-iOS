@@ -87,11 +87,10 @@
         LAContext *context = [[LAContext alloc] init];
         [context evaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics localizedReason:@"Authenticate to login" reply:^(BOOL success, NSError *authenticationError) {
             if (success) {
-                [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-                    [self performSegueWithIdentifier:@"loginSuccess" sender:self];
-                }];
+                [self authenticateUser];
             }
             else {
+                NSLog(@"touch id fail");
                 //message = [NSString stringWithFormat:@"evaluatePolicy: %@", authenticationError.localizedDescription];
             }
         }];
