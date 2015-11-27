@@ -87,6 +87,11 @@
 }
 
 - (void)userLoginTouchID {
+    // Disable login button and show activity indicator
+    [[self buttonLogin] setEnabled:NO];
+    [[self buttonTouchID] setEnabled:NO];
+    [[self activityIndicatorLogin] startAnimating];
+    
     if ([self hasTouchID]) {
         LAContext *context = [[LAContext alloc] init];
         [context evaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics localizedReason:@"Authenticate to login" reply:^(BOOL success, NSError *authenticationError) {
@@ -94,6 +99,7 @@
                 [self authenticateUser];
             }
             else {
+                // TODO: handle failure case
                 NSLog(@"touch id fail");
                 //message = [NSString stringWithFormat:@"evaluatePolicy: %@", authenticationError.localizedDescription];
             }
@@ -104,7 +110,9 @@
 - (void)userLogin {
     // Disable login button and show activity indicator
     [[self buttonLogin] setEnabled:NO];
+    [[self buttonTouchID] setEnabled:NO];
     [[self activityIndicatorLogin] startAnimating];
+    
     
     // Get URL, username, and password
     NSString *urlString = [[self tfURL] text]; //[NSURL URLWithString:[[self tfURL] text]];
@@ -126,6 +134,7 @@
             [self presentViewController:alert animated:YES completion:nil];
             
             [[self buttonLogin] setEnabled:YES];
+            [[self buttonTouchID] setEnabled:YES];
             [[self activityIndicatorLogin] stopAnimating];
             
             return;
@@ -158,7 +167,7 @@
     [self userLogin];
 }
 
-- (IBAction)buttonTouchID:(id)sender {
+- (IBAction)loginTouchID:(id)sender {
     [self userLoginTouchID];
 }
 
@@ -203,6 +212,7 @@
     // Stop progress animation
     [[NSOperationQueue mainQueue] addOperationWithBlock:^{
         [[self buttonLogin] setEnabled:YES];
+        [[self buttonTouchID] setEnabled:YES];
         [[self activityIndicatorLogin] stopAnimating];
     }];
     

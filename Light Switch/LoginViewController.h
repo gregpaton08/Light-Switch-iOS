@@ -16,10 +16,11 @@
 @property (strong, nonatomic) IBOutlet UITextField *tfUsername;
 @property (strong, nonatomic) IBOutlet UITextField *tfPassword;
 @property (strong, nonatomic) IBOutlet UIButton *buttonLogin;
+@property (strong, nonatomic) IBOutlet UIButton *buttonTouchID;
 @property (strong, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicatorLogin;
 
 - (IBAction)login:(id)sender;
-- (IBAction)buttonTouchID:(id)sender;
+- (IBAction)loginTouchID:(id)sender;
 - (IBAction)textFieldPasswordReturn:(id)sender;
 - (IBAction)backgroundTouch:(id)sender;
 
