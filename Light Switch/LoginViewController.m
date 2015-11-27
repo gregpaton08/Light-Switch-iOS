@@ -35,6 +35,8 @@
     if (defaultUsername) {
         [[self tfUsername] setText:defaultUsername];
     }
+    
+    [self userLoginTouchID];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -63,6 +65,37 @@
     
     NSURLSessionDataTask *downloadTask = [session dataTaskWithURL:defaultURL];
     [downloadTask resume];
+}
+
+- (BOOL)hasTouchID {
+    LAContext *context = [[LAContext alloc] init];
+    return [context canEvaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics error:nil];
+}
+
+- (void)promptToUseTouchID {
+    // Get the user defaults
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    
+    BOOL useTouchID = [userDefaults boolForKey:@"useTouchID"];
+    if (!useTouchID) {
+        
+    }
+}
+
+- (void)userLoginTouchID {
+    if ([self hasTouchID]) {
+        LAContext *context = [[LAContext alloc] init];
+        [context evaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics localizedReason:@"Unlock access to locked feature" reply:^(BOOL success, NSError *authenticationError) {
+            if (success) {
+                [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+                    [self performSegueWithIdentifier:@"loginSuccess" sender:self];
+                }];
+            }
+            else {
+                //message = [NSString stringWithFormat:@"evaluatePolicy: %@", authenticationError.localizedDescription];
+            }
+        }];
+    }
 }
 
 - (void)userLogin {
@@ -166,6 +199,7 @@
     
     if (nil == error) {
         [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+            //[self promptToUseTouchID];
             [self performSegueWithIdentifier:@"loginSuccess" sender:self];
         }];
     }
