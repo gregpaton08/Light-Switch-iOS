@@ -54,11 +54,6 @@
     [self lightSwitch:NO];
 }
 
-- (void)URLSession:(NSURLSession *)session didReceiveChallenge:(NSURLAuthenticationChallenge *)challenge completionHandler:(void (^)(NSURLSessionAuthChallengeDisposition, NSURLCredential * _Nullable))completionHandler
-{
-    
-}
-
 - (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didReceiveChallenge:(NSURLAuthenticationChallenge *)challenge completionHandler:(void (^)(NSURLSessionAuthChallengeDisposition, NSURLCredential * _Nullable))completionHandler
 {
     // Get username from user defaults
@@ -69,6 +64,7 @@
     KeychainWrapper *keychainWrapper = [[KeychainWrapper alloc] init];
     NSString *password = [keychainWrapper myObjectForKey:(__bridge id)kSecValueData];
     
+    // Authenticate user
     NSURLCredential *credentials = [NSURLCredential credentialWithUser:username password:password persistence:NSURLCredentialPersistenceNone];
     completionHandler(NSURLSessionAuthChallengeUseCredential, credentials);
 }

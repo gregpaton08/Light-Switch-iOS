@@ -8,7 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-@interface LoginViewController : UIViewController
+@interface LoginViewController : UIViewController <NSURLSessionDataDelegate, NSURLSessionTaskDelegate> {
+    int _sessionFailureCount;
+}
+
 @property (strong, nonatomic) IBOutlet UITextField *tfURL;
 @property (strong, nonatomic) IBOutlet UITextField *tfUsername;
 @property (strong, nonatomic) IBOutlet UITextField *tfPassword;

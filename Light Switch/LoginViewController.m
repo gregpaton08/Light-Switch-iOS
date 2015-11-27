@@ -19,6 +19,8 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
+    _sessionFailureCount = 0;
+    
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     
     NSURL *defaultURL = [userDefaults URLForKey:@"url"];
@@ -47,6 +49,21 @@
 }
 */
 
+- (void)authenticateUser {
+    _sessionFailureCount = 0;
+    
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    NSURL *defaultURL = [userDefaults URLForKey:@"url"];
+    
+    NSURLSessionConfiguration *config = [NSURLSessionConfiguration defaultSessionConfiguration];
+    NSURLSession *session = [NSURLSession sessionWithConfiguration:config delegate:self delegateQueue:nil];
+    
+    NSURLSessionDataTask *downloadTask = [session dataTaskWithURL:defaultURL];
+    [downloadTask resume];
+    
+    //[self performSegueWithIdentifier:@"loginSuccess" sender:self];
+}
+
 - (IBAction)login:(id)sender {
     // Get URL, username, and password
     NSString *urlString = [[self tfURL] text]; //[NSURL URLWithString:[[self tfURL] text]];
@@ -72,6 +89,44 @@
     [keychainWrapper mySetObject:password forKey:(__bridge id)kSecValueData];
     [keychainWrapper writeToKeychain];
     
-    [self performSegueWithIdentifier:@"loginSuccess" sender:self];
+    //[self performSegueWithIdentifier:@"loginSuccess" sender:self];
+    [self authenticateUser];
 }
+
+- (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didReceiveChallenge:(NSURLAuthenticationChallenge *)challenge completionHandler:(void (^)(NSURLSessionAuthChallengeDisposition, NSURLCredential * _Nullable))completionHandler
+{
+    if (0 == _sessionFailureCount) {
+        // Get username from user defaults
+        NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+        NSString *username = [userDefaults stringForKey:@"username"];
+        
+        // Get password from keychain
+        KeychainWrapper *keychainWrapper = [[KeychainWrapper alloc] init];
+        NSString *password = [keychainWrapper myObjectForKey:(__bridge id)kSecValueData];
+        
+        // Authenticate user
+        NSURLCredential *credentials = [NSURLCredential credentialWithUser:username password:password persistence:NSURLCredentialPersistenceNone];
+        completionHandler(NSURLSessionAuthChallengeUseCredential, credentials);
+    }
+    else {
+        UIAlertController *incorrectPasswordAlert = [[UIAlertController alloc] initWithNibName:@"TEST" bundle:nil];
+        //[incorrectPasswordAlert showDetailViewController:<#(nonnull UIViewController *)#> sender:<#(nullable id)#>]
+        //UIAlertView *alertReset = [[UIAlertView alloc] initWithTitle:@"About to Reset Timer" message:@"Continue?" delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Yes", nil];
+        
+        completionHandler(NSURLSessionAuthChallengeCancelAuthenticationChallenge, nil);
+        _sessionFailureCount = 0;
+        return;
+    }
+    
+    ++_sessionFailureCount;
+}
+
+- (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didCompleteWithError:(NSError *)error {
+    if (nil == error) {
+        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+            [self performSegueWithIdentifier:@"loginSuccess" sender:self];
+        }];
+    }
+}
+
 @end
