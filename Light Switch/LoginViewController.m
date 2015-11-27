@@ -9,6 +9,8 @@
 #import "LoginViewController.h"
 #import "KeychainWrapper.h"
 
+@import LocalAuthentication;
+
 @interface LoginViewController ()
 
 @end
@@ -59,9 +61,12 @@
     NSURLSession *session = [NSURLSession sessionWithConfiguration:config delegate:self delegateQueue:nil];
     
     NSURLSessionDataTask *downloadTask = [session dataTaskWithURL:defaultURL];
+//    NSURLSessionDataTask *downloadTask = [session dataTaskWithURL:defaultURL
+//                                                completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+//                                                    NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+//                                                    NSLog(@"%@", json);
+//                                                }];
     [downloadTask resume];
-    
-    //[self performSegueWithIdentifier:@"loginSuccess" sender:self];
 }
 
 - (void)userLogin {
@@ -138,6 +143,14 @@
     if (nil == error) {
         [[NSOperationQueue mainQueue] addOperationWithBlock:^{
             [self performSegueWithIdentifier:@"loginSuccess" sender:self];
+        }];
+    }
+    else {
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Unable to connect to server" message:@"Please check network connection" preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *action = [UIAlertAction actionWithTitle:@"Okay" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {}];
+        [alert addAction:action];
+        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+            [self presentViewController:alert animated:YES completion:nil];
         }];
     }
 }
