@@ -8,6 +8,7 @@
 
 #import "LoginViewController.h"
 #import "KeychainWrapper.h"
+#import "Reachability.h"
 
 @import LocalAuthentication;
 
@@ -65,6 +66,7 @@
 }
 
 - (void)userLogin {
+    // Disable login button and show activity indicator
     [[self buttonLogin] setEnabled:NO];
     [[self activityIndicatorLogin] startAnimating];
     
@@ -72,6 +74,20 @@
     NSString *urlString = [[self tfURL] text]; //[NSURL URLWithString:[[self tfURL] text]];
     if (false == [[[urlString substringToIndex:4] lowercaseString] isEqualToString:@"http"]) {
         urlString = [NSString stringWithFormat:@"http://%@", urlString];
+    }
+    // If ip address is local/private then check that wifi is on
+    if ([urlString containsString:@"192.168"]) {
+        if ([[Reachability reachabilityForInternetConnection] currentReachabilityStatus] != ReachableViaWiFi) {
+            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Not connected to wifi" message:@"Connect to wifi and try again" preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertAction *action = [UIAlertAction actionWithTitle:@"Okay" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {}];
+            [alert addAction:action];
+            [self presentViewController:alert animated:YES completion:nil];
+            
+            [[self buttonLogin] setEnabled:YES];
+            [[self activityIndicatorLogin] stopAnimating];
+            
+            return;
+        }
     }
     NSURL *const url = [NSURL URLWithString:urlString];
     NSString *const username = [[self tfUsername] text];
@@ -92,7 +108,6 @@
     [keychainWrapper mySetObject:password forKey:(__bridge id)kSecValueData];
     [keychainWrapper writeToKeychain];
     
-    //[self performSegueWithIdentifier:@"loginSuccess" sender:self];
     [self authenticateUser];
 }
 

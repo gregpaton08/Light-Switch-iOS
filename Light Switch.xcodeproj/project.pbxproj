@@ -18,6 +18,7 @@
 		372CB4E81C0418200064F4DE /* Light_SwitchUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 372CB4E71C0418200064F4DE /* Light_SwitchUITests.m */; };
 		372CB4F71C06820F0064F4DE /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 372CB4F61C06820F0064F4DE /* LoginViewController.m */; };
 		372CB5001C076DF50064F4DE /* KeychainWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 372CB4FF1C076DF50064F4DE /* KeychainWrapper.m */; };
+		372CB5031C083A490064F4DE /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 372CB5021C083A490064F4DE /* Reachability.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,6 +60,8 @@
 		372CB4F61C06820F0064F4DE /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		372CB4FE1C076DF40064F4DE /* KeychainWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeychainWrapper.h; sourceTree = "<group>"; };
 		372CB4FF1C076DF50064F4DE /* KeychainWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeychainWrapper.m; sourceTree = "<group>"; };
+		372CB5011C083A490064F4DE /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
+		372CB5021C083A490064F4DE /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,6 +112,8 @@
 		372CB4BE1C0418200064F4DE /* Light Switch */ = {
 			isa = PBXGroup;
 			children = (
+				372CB5011C083A490064F4DE /* Reachability.h */,
+				372CB5021C083A490064F4DE /* Reachability.m */,
 				372CB4FE1C076DF40064F4DE /* KeychainWrapper.h */,
 				372CB4FF1C076DF50064F4DE /* KeychainWrapper.m */,
 				372CB4C21C0418200064F4DE /* AppDelegate.h */,
@@ -289,6 +294,7 @@
 				372CB4C71C0418200064F4DE /* ViewController.m in Sources */,
 				372CB4C41C0418200064F4DE /* AppDelegate.m in Sources */,
 				372CB4CD1C0418200064F4DE /* Light_Switch.xcdatamodeld in Sources */,
+				372CB5031C083A490064F4DE /* Reachability.m in Sources */,
 				372CB5001C076DF50064F4DE /* KeychainWrapper.m in Sources */,
 				372CB4C11C0418200064F4DE /* main.m in Sources */,
 				372CB4F71C06820F0064F4DE /* LoginViewController.m in Sources */,
