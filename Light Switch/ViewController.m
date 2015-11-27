@@ -69,4 +69,7 @@
     completionHandler(NSURLSessionAuthChallengeUseCredential, credentials);
 }
 
+- (IBAction)buttonPressLogout:(id)sender {
+    [self performSegueWithIdentifier:@"logout" sender:self];
+}
 @end

@@ -12,6 +12,7 @@
 
 @property (strong, nonatomic) IBOutlet UIButton *buttonPressLightOn;
 @property (strong, nonatomic) IBOutlet UIButton *buttonPressLightOff;
+- (IBAction)buttonPressLogout:(id)sender;
 
 @end
 
