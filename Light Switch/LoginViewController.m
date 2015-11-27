@@ -177,6 +177,7 @@
             [self presentViewController:alert animated:YES completion:nil];
             
             [[self buttonLogin] setEnabled:YES];
+            [[self buttonLogin] setHidden:NO];
             [[self buttonTouchID] setEnabled:YES];
             [[self activityIndicatorLogin] stopAnimating];
             
@@ -203,6 +204,7 @@
     
     // Disable login button and show activity indicator
     [[self buttonLogin] setEnabled:NO];
+    [[self buttonLogin] setHidden:YES];
     [[self buttonTouchID] setEnabled:NO];
     [[self activityIndicatorLogin] startAnimating];
     
@@ -224,6 +226,7 @@
 - (void)userLogin {
     // Disable login button and show activity indicator
     [[self buttonLogin] setEnabled:NO];
+    [[self buttonLogin] setHidden:YES];
     [[self buttonTouchID] setEnabled:NO];
     [[self activityIndicatorLogin] startAnimating];
     
@@ -310,6 +313,7 @@
     // Stop progress animation
     [[NSOperationQueue mainQueue] addOperationWithBlock:^{
         [[self buttonLogin] setEnabled:YES];
+        [[self buttonLogin] setHidden:NO];
         [[self buttonTouchID] setEnabled:YES];
         [[self activityIndicatorLogin] stopAnimating];
     }];

@@ -17,30 +17,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mtL-Ji-c0B">
-                                <rect key="frame" x="281" y="363" width="38" height="30"/>
-                                <animations/>
-                                <state key="normal" title="Login"/>
-                                <connections>
-                                    <action selector="login:" destination="dCO-HN-IPZ" eventType="touchUpInside" id="zMH-8H-hIj"/>
-                                </connections>
-                            </button>
-                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" ambiguous="YES" misplaced="YES" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="sdw-UQ-gWL">
-                                <rect key="frame" x="253" y="368" width="20" height="20"/>
-                                <animations/>
-                            </activityIndicatorView>
-                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cDx-3k-hQW">
-                                <rect key="frame" x="267" y="418" width="67" height="67"/>
-                                <animations/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="67" id="sa4-JR-axC"/>
-                                    <constraint firstAttribute="width" constant="67" id="zch-1f-EfI"/>
-                                </constraints>
-                                <state key="normal" title="Button" image="Touch-icon-lg"/>
-                                <connections>
-                                    <action selector="loginTouchID:" destination="dCO-HN-IPZ" eventType="touchUpInside" id="MdE-9p-vfC"/>
-                                </connections>
-                            </button>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Username" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="9P5-XI-sJZ">
                                 <rect key="frame" x="175" y="229" width="250" height="30"/>
                                 <animations/>
@@ -56,12 +32,36 @@
                                     <action selector="textFieldPasswordReturn:" destination="dCO-HN-IPZ" eventType="editingDidEndOnExit" id="9my-4i-ZhZ"/>
                                 </connections>
                             </textField>
+                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mtL-Ji-c0B">
+                                <rect key="frame" x="281" y="363" width="38" height="30"/>
+                                <animations/>
+                                <state key="normal" title="Login"/>
+                                <connections>
+                                    <action selector="login:" destination="dCO-HN-IPZ" eventType="touchUpInside" id="zMH-8H-hIj"/>
+                                </connections>
+                            </button>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="IP Address" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="HkZ-6y-owm">
                                 <rect key="frame" x="175" y="179" width="250" height="30"/>
                                 <animations/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="numbersAndPunctuation" returnKeyType="next"/>
                             </textField>
+                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cDx-3k-hQW">
+                                <rect key="frame" x="267" y="418" width="67" height="67"/>
+                                <animations/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="67" id="sa4-JR-axC"/>
+                                    <constraint firstAttribute="width" constant="67" id="zch-1f-EfI"/>
+                                </constraints>
+                                <state key="normal" title="Button" image="Touch-icon-lg"/>
+                                <connections>
+                                    <action selector="loginTouchID:" destination="dCO-HN-IPZ" eventType="touchUpInside" id="MdE-9p-vfC"/>
+                                </connections>
+                            </button>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" ambiguous="YES" misplaced="YES" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="sdw-UQ-gWL">
+                                <rect key="frame" x="290" y="368" width="20" height="20"/>
+                                <animations/>
+                            </activityIndicatorView>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -70,8 +70,7 @@
                             <constraint firstItem="HkZ-6y-owm" firstAttribute="centerX" secondItem="zte-8b-tlC" secondAttribute="centerX" id="5U9-4V-bR9"/>
                             <constraint firstItem="BRj-hL-3Xm" firstAttribute="top" secondItem="9P5-XI-sJZ" secondAttribute="bottom" constant="20" id="BH1-qF-X5R"/>
                             <constraint firstItem="BRj-hL-3Xm" firstAttribute="centerX" secondItem="zte-8b-tlC" secondAttribute="centerX" id="IrD-cg-6sA"/>
-                            <constraint firstItem="sdw-UQ-gWL" firstAttribute="centerX" secondItem="zte-8b-tlC" secondAttribute="centerX" id="Mxd-8S-Tss"/>
-                            <constraint firstItem="sdw-UQ-gWL" firstAttribute="centerX" secondItem="zte-8b-tlC" secondAttribute="centerX" id="Rwe-wg-AyC"/>
+                            <constraint firstItem="sdw-UQ-gWL" firstAttribute="centerX" secondItem="zte-8b-tlC" secondAttribute="centerX" id="OwF-ED-CYZ"/>
                             <constraint firstItem="cDx-3k-hQW" firstAttribute="centerX" secondItem="zte-8b-tlC" secondAttribute="centerX" id="T0c-Cp-hD0"/>
                             <constraint firstItem="mtL-Ji-c0B" firstAttribute="centerX" secondItem="zte-8b-tlC" secondAttribute="centerX" id="b7i-jF-GXC"/>
                             <constraint firstItem="9P5-XI-sJZ" firstAttribute="top" secondItem="HkZ-6y-owm" secondAttribute="bottom" constant="20" id="rLs-I8-vrp"/>
