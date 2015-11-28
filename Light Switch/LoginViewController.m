@@ -81,8 +81,6 @@
     
     [self setUrlSessionTask:[session dataTaskWithURL:url]];
     [[self urlSessionTask] resume];
-    //NSURLSessionDataTask *task = [session dataTaskWithURL:url];
-    //[task resume];
 }
 
 - (BOOL)hasTouchID {
@@ -235,8 +233,6 @@
 }
 
 - (void)setActivityIndicator:(BOOL)active {
-    //[[self buttonLogin] setEnabled:!active];
-    //[[self buttonLogin] setHidden:active];
     [[self buttonTouchID] setEnabled:!active];
     
     if (active) {
@@ -342,6 +338,7 @@
         [self setActivityIndicator:NO];
     }];
     
+    // If no error logging in then segue to the next view
     if (nil == error) {
         [[NSOperationQueue mainQueue] addOperationWithBlock:^{
             // Update user defaults for service and user
@@ -357,6 +354,7 @@
             }];
         }];
     }
+    // If task was not cancelled by the user then report error
     else if (false == [[error localizedDescription] isEqualToString:@"cancelled"]) {
         UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Unable to connect to server" message:@"Please check URL and network connection" preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction *action = [UIAlertAction actionWithTitle:@"Okay" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {}];
