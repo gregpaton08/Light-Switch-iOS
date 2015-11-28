@@ -152,8 +152,8 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="NkQ-Op-FDH" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="GPb-Va-ej4"/>
-                            <constraint firstItem="LUv-ia-cR2" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="ffJ-FO-wic"/>
-                            <constraint firstItem="9VA-ZX-3KA" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" constant="132" id="jaU-16-SRZ"/>
+                            <constraint firstItem="LUv-ia-cR2" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" constant="-100" id="ZgV-4r-55z"/>
+                            <constraint firstItem="9VA-ZX-3KA" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" constant="100" id="jaU-16-SRZ"/>
                             <constraint firstItem="5ah-kK-Xcc" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="tH0-Bo-Xte"/>
                         </constraints>
                     </view>
