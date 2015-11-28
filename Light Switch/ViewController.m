@@ -50,16 +50,16 @@
 }
 
 - (void)setActivityIndicator:(BOOL)active {
+    [[self buttonOn] setEnabled:!active];
+    [[self buttonOff] setEnabled:!active];
     [[self buttonCancel] setHidden:!active];
     
-//    if (active) {
-//        [[self buttonLogin] setTitle:@"Cancel" forState:UIControlStateNormal];
-//        [[self activityIndicatorLogin] startAnimating];
-//    }
-//    else {
-//        [[self buttonLogin] setTitle:@"Login" forState:UIControlStateNormal];
-//        [[self activityIndicatorLogin] stopAnimating];
-//    }
+    if (active) {
+        [[self activityIndicatorLightSwitch] startAnimating];
+    }
+    else {
+        [[self activityIndicatorLightSwitch] stopAnimating];
+    }
 }
 
 - (IBAction)buttonPressLightOn:(id)sender {
@@ -67,11 +67,17 @@
 }
 
 - (IBAction)buttonPressLightOff:(id)sender {
+    [self setActivityIndicator:YES];
     [self lightSwitch:NO];
 }
 
 - (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didReceiveChallenge:(NSURLAuthenticationChallenge *)challenge completionHandler:(void (^)(NSURLSessionAuthChallengeDisposition, NSURLCredential * _Nullable))completionHandler
 {
+    // Stop activity indicator
+    [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+        [self setActivityIndicator:NO];
+    }];
+    
     // Get username from user defaults
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     NSString *service = [userDefaults stringForKey:LSKeyServiceCurrent];
