@@ -176,10 +176,7 @@
             [alert addAction:actionSettings];
             [self presentViewController:alert animated:YES completion:nil];
             
-            [[self buttonLogin] setEnabled:YES];
-            [[self buttonLogin] setHidden:NO];
-            [[self buttonTouchID] setEnabled:YES];
-            [[self activityIndicatorLogin] stopAnimating];
+            [self setActivityIndicator:NO];
             
             return NO;
         }
@@ -202,11 +199,7 @@
         return;
     }
     
-    // Disable login button and show activity indicator
-    [[self buttonLogin] setEnabled:NO];
-    [[self buttonLogin] setHidden:YES];
-    [[self buttonTouchID] setEnabled:NO];
-    [[self activityIndicatorLogin] startAnimating];
+    [self setActivityIndicator:YES];
     
     if ([self hasTouchID]) {
         LAContext *context = [[LAContext alloc] init];
@@ -218,18 +211,35 @@
                 // TODO: handle failure case
                 NSLog(@"touch id fail");
                 //message = [NSString stringWithFormat:@"evaluatePolicy: %@", authenticationError.localizedDescription];
+                
+                switch ([authenticationError code])
+                {
+                    case LAErrorUserCancel:
+                        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+                            [self setActivityIndicator:NO];
+                        }];
+                        break;
+                }
             }
         }];
     }
 }
 
-- (void)userLogin {
-    // Disable login button and show activity indicator
-    [[self buttonLogin] setEnabled:NO];
-    [[self buttonLogin] setHidden:YES];
-    [[self buttonTouchID] setEnabled:NO];
-    [[self activityIndicatorLogin] startAnimating];
+- (void)setActivityIndicator:(BOOL)active {
+    [[self buttonLogin] setEnabled:!active];
+    [[self buttonLogin] setHidden:active];
+    [[self buttonTouchID] setEnabled:!active];
     
+    if (active) {
+        [[self activityIndicatorLogin] startAnimating];
+    }
+    else {
+        [[self activityIndicatorLogin] stopAnimating];
+    }
+}
+
+- (void)userLogin {
+    [self setActivityIndicator:YES];
     
     // Get URL, username, and password
     NSString *urlString = [[self tfURL] text]; //[NSURL URLWithString:[[self tfURL] text]];
@@ -312,10 +322,7 @@
 - (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didCompleteWithError:(NSError *)error {
     // Stop progress animation
     [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-        [[self buttonLogin] setEnabled:YES];
-        [[self buttonLogin] setHidden:NO];
-        [[self buttonTouchID] setEnabled:YES];
-        [[self activityIndicatorLogin] stopAnimating];
+        [self setActivityIndicator:NO];
     }];
     
     if (nil == error) {
