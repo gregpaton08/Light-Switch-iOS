@@ -19,6 +19,8 @@
 
 @implementation LoginViewController
 
+#pragma mark - UIViewController methods
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
@@ -71,6 +73,8 @@
 }
 */
 
+#pragma mark - Authentication methods
+
 - (void)authenticateUser:(NSString*)user forService:(NSString*)service withURL:(NSURL*)url {
     _sessionFailureCount = 0;
     
@@ -87,16 +91,13 @@
     [[self urlSessionTask] resume];
 }
 
-- (BOOL)hasTouchID {
-    LAContext *context = [[LAContext alloc] init];
-    return [context canEvaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics error:nil];
-}
-
 - (void) cancelAuthentication {
     if ([self urlSessionTask]) {
         [[self urlSessionTask] cancel];
     }
 }
+
+#pragma mark - User interaction methods
 
 - (void)promptToUseTouchIDWithCompletion:(void (^)(void))completion {
     // Get the user defaults
@@ -114,22 +115,16 @@
         
         BOOL useTouchID = [userDefaults boolForKey:LSKeyTouchIDCredentials];
         
+        // If touch ID is not in use then prompt user to store credentials for touch ID
         if (false == useTouchID) {
             title = @"Store these credentials with Touch ID?";
             message = @"Any user with Touch ID will be able to login";
             promptUser = YES;
         }
-        else if (false == [defaultURL isEqual:[userDefaults URLForKey:LSKeyURLTID]]) {
-            title = @"Update credentials for Touch ID?";
-            message = @"Credentials have changed";
-            promptUser = YES;
-        }
-        else if (false == [username isEqualToString:[userDefaults stringForKey:LSKeyUsernameTID]]) {
-            title = @"Update credentials for Touch ID?";
-            message = @"Credentials have changed";
-            promptUser = YES;
-        }
-        else if (false == [password isEqualToString:passwordTouchID]) {
+        // Else if new credentials are entered prompt the user to update the touch ID credentials
+        else if (false == [defaultURL isEqual:[userDefaults URLForKey:LSKeyURLTID]] ||
+                 false == [username isEqualToString:[userDefaults stringForKey:LSKeyUsernameTID]] ||
+                 false == [password isEqualToString:passwordTouchID]) {
             title = @"Update credentials for Touch ID?";
             message = @"Credentials have changed";
             promptUser = YES;
@@ -170,6 +165,28 @@
     }
 }
 
+- (void)setActivityIndicator:(BOOL)active {
+    [[self buttonTouchID] setEnabled:!active];
+    
+    if (active) {
+        [[self buttonLogin] setTitle:@"Cancel" forState:UIControlStateNormal];
+        [[self activityIndicatorLogin] startAnimating];
+    }
+    else {
+        [[self buttonLogin] setTitle:@"Login" forState:UIControlStateNormal];
+        [[self activityIndicatorLogin] stopAnimating];
+    }
+}
+
+- (void)displaySimpleAlertWithTitle:(NSString*)title withMessage:(NSString*)message {
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *action = [UIAlertAction actionWithTitle:@"Okay" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {}];
+    [alert addAction:action];
+    [self presentViewController:alert animated:YES completion:nil];
+}
+
+#pragma mark - Login methods
+
 - (BOOL)hasWifiForURL:(NSURL*)url {
     NSString *urlString = [url absoluteString];
     
@@ -195,28 +212,6 @@
     return YES;
 }
 
-- (void)setActivityIndicator:(BOOL)active {
-    [[self buttonTouchID] setEnabled:!active];
-    
-    if (active) {
-        [[self buttonLogin] setTitle:@"Cancel" forState:UIControlStateNormal];
-        [[self activityIndicatorLogin] startAnimating];
-    }
-    else {
-        [[self buttonLogin] setTitle:@"Login" forState:UIControlStateNormal];
-        [[self activityIndicatorLogin] stopAnimating];
-    }
-}
-
-- (void)displaySimpleAlertWithTitle:(NSString*)title withMessage:(NSString*)message {
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction *action = [UIAlertAction actionWithTitle:@"Okay" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {}];
-    [alert addAction:action];
-    [self presentViewController:alert animated:YES completion:nil];
-}
-
-#pragma mark - Login methods
-
 - (void)userLoginTouchID {
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     NSURL *url = [userDefaults URLForKey:LSKeyURLTID];
@@ -233,8 +228,9 @@
     
     [self setActivityIndicator:YES];
     
-    if ([self hasTouchID]) {
-        LAContext *context = [[LAContext alloc] init];
+    LAContext *context = [[LAContext alloc] init];
+    // Check if touch ID is available
+    if ([context canEvaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics error:nil]) {
         [context evaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics localizedReason:@"Authenticate to login" reply:^(BOOL success, NSError *authenticationError) {
             if (success) {
                 [self authenticateUser:username forService:LSServiceLoginTID withURL:url];
