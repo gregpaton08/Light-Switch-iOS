@@ -90,6 +90,12 @@
     return [context canEvaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics error:nil];
 }
 
+- (void) cancelAuthentication {
+    if ([self urlSessionTask]) {
+        [[self urlSessionTask] cancel];
+    }
+}
+
 - (void)promptToUseTouchIDWithCompletion:(void (^)(void))completion {
     // Get the user defaults
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
@@ -279,8 +285,12 @@
 }
 
 - (IBAction)login:(id)sender {
-    if ([[[sender titleLabel] text] isEqualToString:@"Login"]) {
+    NSString *title = [[sender titleLabel] text];
+    if ([title isEqualToString:@"Login"]) {
         [self userLogin];
+    }
+    else if ([title isEqualToString:@"Cancel"]) {
+        [self cancelAuthentication];
     }
 }
 
@@ -346,7 +356,7 @@
             }];
         }];
     }
-    else {
+    else if (false == [[error localizedDescription] isEqualToString:@"cancelled"]) {
         UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Unable to connect to server" message:@"Please check URL and network connection" preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction *action = [UIAlertAction actionWithTitle:@"Okay" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {}];
         [alert addAction:action];
