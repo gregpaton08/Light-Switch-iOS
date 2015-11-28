@@ -27,27 +27,31 @@
     
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     
+    // If a URL has been saved then load it into the text field
     NSURL *defaultURL = [userDefaults URLForKey:LSKeyURL];
     if (defaultURL) {
         [[self tfURL] setText:[defaultURL absoluteString]];
     }
     
+    // If a username has been saved then load it into the text field
     NSString *defaultUsername = [userDefaults stringForKey:LSKeyUsername];
     if (defaultUsername) {
         [[self tfUsername] setText:defaultUsername];
     }
     
-    if ([userDefaults stringForKey:LSKeyServiceTID] &&
-        [userDefaults stringForKey:LSKeyUsernameTID] &&
+    // If credentials for touch ID have been stored then prompt user to login via touch ID
+    if ([userDefaults stringForKey:LSKeyUsernameTID] &&
         [userDefaults stringForKey:LSKeyURLTID] &&
         [userDefaults boolForKey:@"appLaunch"] &&
         [userDefaults boolForKey:@"storeCredentialsTouchID"]) {
         [self userLoginTouchID];
     }
+    // Else if credentials have not yet been stored for touch ID then disable touch ID
     else if (false == [userDefaults boolForKey:@"storeCredentialsTouchID"]) {
         [[self buttonTouchID] setEnabled:NO];
     }
     
+    // Set flag to signal that the app has now launched for the first time
     [userDefaults setBool:NO forKey:@"appLaunch"];
     [userDefaults synchronize];
 }
@@ -106,7 +110,7 @@
     NSString *message;
     if (false == [service isEqualToString:LSServiceLoginTID]) {
         NSString *password = [SSKeychain passwordForService:service account:username];
-        NSString *passwordTouchID = [SSKeychain passwordForService:LSKeyServiceTID account:username];
+        NSString *passwordTouchID = [SSKeychain passwordForService:LSServiceLoginTID account:username];
         
         BOOL useTouchID = [userDefaults boolForKey:LSKeyTouchIDCredentials];
         
@@ -144,8 +148,8 @@
             [userDefaults setObject:username forKey:LSKeyUsernameTID];
         
             // Save password for touch ID
-            NSString *password = [SSKeychain passwordForService:LSKeyService account:username];
-            [SSKeychain setPassword:password forService:LSKeyServiceTID account:username];
+            NSString *password = [SSKeychain passwordForService:LSServiceLogin account:username];
+            [SSKeychain setPassword:password forService:LSServiceLoginTID account:username];
             
             // Update defaults to flag that touch ID credentials are in use
             [userDefaults setBool:YES forKey:LSKeyTouchIDCredentials];
@@ -191,6 +195,28 @@
     return YES;
 }
 
+- (void)setActivityIndicator:(BOOL)active {
+    [[self buttonTouchID] setEnabled:!active];
+    
+    if (active) {
+        [[self buttonLogin] setTitle:@"Cancel" forState:UIControlStateNormal];
+        [[self activityIndicatorLogin] startAnimating];
+    }
+    else {
+        [[self buttonLogin] setTitle:@"Login" forState:UIControlStateNormal];
+        [[self activityIndicatorLogin] stopAnimating];
+    }
+}
+
+- (void)displaySimpleAlertWithTitle:(NSString*)title withMessage:(NSString*)message {
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *action = [UIAlertAction actionWithTitle:@"Okay" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {}];
+    [alert addAction:action];
+    [self presentViewController:alert animated:YES completion:nil];
+}
+
+#pragma mark - Login methods
+
 - (void)userLoginTouchID {
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     NSURL *url = [userDefaults URLForKey:LSKeyURLTID];
@@ -211,37 +237,14 @@
         LAContext *context = [[LAContext alloc] init];
         [context evaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics localizedReason:@"Authenticate to login" reply:^(BOOL success, NSError *authenticationError) {
             if (success) {
-                [self authenticateUser:username forService:LSKeyServiceTID withURL:url];
+                [self authenticateUser:username forService:LSServiceLoginTID withURL:url];
             }
             else {
-                // TODO: handle failure case
-                NSLog(@"touch id fail");
-                //message = [NSString stringWithFormat:@"evaluatePolicy: %@", authenticationError.localizedDescription];
-                
-//                switch ([authenticationError code])
-//                {
-//                    case LAErrorUserCancel:
-//                        break;
-//                }
-                
                 [[NSOperationQueue mainQueue] addOperationWithBlock:^{
                     [self setActivityIndicator:NO];
                 }];
             }
         }];
-    }
-}
-
-- (void)setActivityIndicator:(BOOL)active {
-    [[self buttonTouchID] setEnabled:!active];
-    
-    if (active) {
-        [[self buttonLogin] setTitle:@"Cancel" forState:UIControlStateNormal];
-        [[self activityIndicatorLogin] startAnimating];
-    }
-    else {
-        [[self buttonLogin] setTitle:@"Login" forState:UIControlStateNormal];
-        [[self activityIndicatorLogin] stopAnimating];
     }
 }
 
@@ -275,11 +278,13 @@
     [userDefaults synchronize];
     
     // Store the password in the keychain
-    [SSKeychain setPassword:password forService:LSKeyService account:username];
+    [SSKeychain setPassword:password forService:LSServiceLogin account:username];
     
     // Authenticate the user
-    [self authenticateUser:username forService:LSKeyService withURL:url];
+    [self authenticateUser:username forService:LSServiceLogin withURL:url];
 }
+
+# pragma mark - IBAction methods
 
 - (IBAction)login:(id)sender {
     NSString *title = [[sender titleLabel] text];
@@ -300,6 +305,12 @@
     [self userLogin];
 }
 
+- (IBAction)backgroundTouch:(id)sender {
+    [self.view endEditing:YES];
+}
+
+#pragma mark - NSURLSessionDataDelegate methods
+
 - (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didReceiveChallenge:(NSURLAuthenticationChallenge *)challenge completionHandler:(void (^)(NSURLSessionAuthChallengeDisposition, NSURLCredential * _Nullable))completionHandler
 {
     if (0 == _sessionFailureCount) {
@@ -316,11 +327,8 @@
         completionHandler(NSURLSessionAuthChallengeUseCredential, credentials);
     }
     else {
-        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Incorrect username or password" message:@"Try again" preferredStyle:UIAlertControllerStyleAlert];
-        UIAlertAction *action = [UIAlertAction actionWithTitle:@"Okay" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {}];
-        [alert addAction:action];
         [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-            [self presentViewController:alert animated:YES completion:nil];
+            [self displaySimpleAlertWithTitle:@"Incorrect username or password" withMessage:@"Try again"];
         }];
         
         completionHandler(NSURLSessionAuthChallengeCancelAuthenticationChallenge, nil);
@@ -332,6 +340,8 @@
     ++_sessionFailureCount;
 }
 
+#pragma mark - NSURLSessionTaskDelegate methods
+
 - (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didCompleteWithError:(NSError *)error {
     // Stop progress animation
     [[NSOperationQueue mainQueue] addOperationWithBlock:^{
@@ -341,11 +351,9 @@
     // If no error logging in then segue to the next view
     if (nil == error) {
         [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-            // Update user defaults for service and user
+            // Update user defaults for username
             NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-            NSString *service = [userDefaults stringForKey:LSKeyServiceCurrent];
             NSString *username = [userDefaults stringForKey:LSKeyUsernameCurrent];
-            [userDefaults setObject:service forKey:LSKeyService];
             [userDefaults setObject:username forKey:LSKeyUsername];
             [userDefaults synchronize];
             
@@ -356,17 +364,10 @@
     }
     // If task was not cancelled by the user then report error
     else if (false == [[error localizedDescription] isEqualToString:@"cancelled"]) {
-        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Unable to connect to server" message:@"Please check URL and network connection" preferredStyle:UIAlertControllerStyleAlert];
-        UIAlertAction *action = [UIAlertAction actionWithTitle:@"Okay" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {}];
-        [alert addAction:action];
         [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-            [self presentViewController:alert animated:YES completion:nil];
+            [self displaySimpleAlertWithTitle:@"Unable to connect to server" withMessage:@"Please check URL and network connection"];
         }];
     }
-}
-
-- (IBAction)backgroundTouch:(id)sender {
-    [self.view endEditing:YES];
 }
 
 @end

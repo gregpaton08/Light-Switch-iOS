@@ -59,7 +59,7 @@
 {
     // Get username from user defaults
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    NSString *service = [userDefaults stringForKey:LSKeyService];
+    NSString *service = [userDefaults stringForKey:LSKeyServiceCurrent];
     NSString *username = [userDefaults stringForKey:LSKeyUsername];
     
     // Get password from keychain
