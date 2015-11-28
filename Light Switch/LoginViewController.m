@@ -79,8 +79,10 @@
     NSURLSessionConfiguration *config = [NSURLSessionConfiguration defaultSessionConfiguration];
     NSURLSession *session = [NSURLSession sessionWithConfiguration:config delegate:self delegateQueue:nil];
     
-    NSURLSessionDataTask *task = [session dataTaskWithURL:url];
-    [task resume];
+    [self setUrlSessionTask:[session dataTaskWithURL:url]];
+    [[self urlSessionTask] resume];
+    //NSURLSessionDataTask *task = [session dataTaskWithURL:url];
+    //[task resume];
 }
 
 - (BOOL)hasTouchID {
