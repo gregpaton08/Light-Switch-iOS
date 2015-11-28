@@ -19,13 +19,15 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
+    
+    // Hide cancle button until needed
+    [[self buttonCancel] setHidden:YES];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
 
 - (void)lightSwitch:(BOOL)on {
     // Get the user defaults
@@ -47,8 +49,21 @@
     [downloadTask resume];
 }
 
+- (void)setActivityIndicator:(BOOL)active {
+    [[self buttonCancel] setHidden:!active];
+    
+//    if (active) {
+//        [[self buttonLogin] setTitle:@"Cancel" forState:UIControlStateNormal];
+//        [[self activityIndicatorLogin] startAnimating];
+//    }
+//    else {
+//        [[self buttonLogin] setTitle:@"Login" forState:UIControlStateNormal];
+//        [[self activityIndicatorLogin] stopAnimating];
+//    }
+}
+
 - (IBAction)buttonPressLightOn:(id)sender {
-    [self lightSwitch:YES];
+    //[self lightSwitch:YES];
 }
 
 - (IBAction)buttonPressLightOff:(id)sender {
@@ -75,4 +90,8 @@
 - (IBAction)buttonPressLogout:(id)sender {
     [self performSegueWithIdentifier:@"logout" sender:self];
 }
+
+- (IBAction)buttonPressCancel:(id)sender {
+}
+
 @end

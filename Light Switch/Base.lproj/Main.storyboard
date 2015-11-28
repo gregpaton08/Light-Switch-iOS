@@ -111,22 +111,20 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LUv-ia-cR2">
-                                <rect key="frame" x="113" y="164" width="30" height="30"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="ysb-F1-yU1">
+                                <rect key="frame" x="408" y="164" width="30" height="30"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9VA-ZX-3KA">
+                                        <rect key="frame" x="0.0" y="0.0" width="30" height="30"/>
+                                        <animations/>
+                                        <state key="normal" title="Off"/>
+                                        <connections>
+                                            <action selector="buttonPressLightOff:" destination="BYZ-38-t0r" eventType="touchUpInside" id="VhU-jX-3Ut"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
                                 <animations/>
-                                <state key="normal" title="On"/>
-                                <connections>
-                                    <action selector="buttonPressLightOn:" destination="BYZ-38-t0r" eventType="touchUpInside" id="I0Q-nM-RMu"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9VA-ZX-3KA">
-                                <rect key="frame" x="245" y="164" width="30" height="30"/>
-                                <animations/>
-                                <state key="normal" title="Off"/>
-                                <connections>
-                                    <action selector="buttonPressLightOff:" destination="BYZ-38-t0r" eventType="touchUpInside" id="jgJ-b5-Yfb"/>
-                                </connections>
-                            </button>
+                            </stackView>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rlb-0V-zLf">
                                 <rect key="frame" x="19" y="28" width="48" height="30"/>
                                 <animations/>
@@ -135,12 +133,41 @@
                                     <action selector="buttonPressLogout:" destination="BYZ-38-t0r" eventType="touchUpInside" id="xh6-mA-3w0"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LUv-ia-cR2">
+                                <rect key="frame" x="184" y="164" width="30" height="30"/>
+                                <animations/>
+                                <state key="normal" title="On"/>
+                                <connections>
+                                    <action selector="buttonPressLightOn:" destination="BYZ-38-t0r" eventType="touchUpInside" id="T8S-Aj-0jz"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5ah-kK-Xcc">
+                                <rect key="frame" x="276" y="285" width="48" height="30"/>
+                                <animations/>
+                                <state key="normal" title="Cancel"/>
+                                <connections>
+                                    <action selector="buttonPressCancel:" destination="BYZ-38-t0r" eventType="touchUpInside" id="yAX-ZH-KOB"/>
+                                </connections>
+                            </button>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" ambiguous="YES" misplaced="YES" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="NkQ-Op-FDH">
+                                <rect key="frame" x="290" y="236" width="20" height="20"/>
+                                <animations/>
+                            </activityIndicatorView>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="NkQ-Op-FDH" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="GPb-Va-ej4"/>
+                            <constraint firstItem="LUv-ia-cR2" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="ffJ-FO-wic"/>
+                            <constraint firstItem="5ah-kK-Xcc" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="tH0-Bo-Xte"/>
+                            <constraint firstItem="ysb-F1-yU1" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" constant="123" id="vPm-7X-yhQ"/>
+                        </constraints>
                     </view>
                     <connections>
-                        <outlet property="buttonPressLightOff" destination="9VA-ZX-3KA" id="1lu-5g-sui"/>
+                        <outlet property="activityIndicatorLightSwitch" destination="NkQ-Op-FDH" id="yH0-pu-3e8"/>
+                        <outlet property="buttonCancel" destination="5ah-kK-Xcc" id="32b-eo-Zyz"/>
+                        <outlet property="buttonOff" destination="9VA-ZX-3KA" id="0a0-2d-Jaa"/>
+                        <outlet property="buttonOn" destination="LUv-ia-cR2" id="W3y-MZ-bOm"/>
                         <segue destination="dCO-HN-IPZ" kind="presentation" identifier="logout" id="WDL-0H-7rr"/>
                     </connections>
                 </viewController>
