@@ -226,14 +226,16 @@
 }
 
 - (void)setActivityIndicator:(BOOL)active {
-    [[self buttonLogin] setEnabled:!active];
-    [[self buttonLogin] setHidden:active];
+    //[[self buttonLogin] setEnabled:!active];
+    //[[self buttonLogin] setHidden:active];
     [[self buttonTouchID] setEnabled:!active];
     
     if (active) {
+        [[self buttonLogin] setTitle:@"Cancel" forState:UIControlStateNormal];
         [[self activityIndicatorLogin] startAnimating];
     }
     else {
+        [[self buttonLogin] setTitle:@"Login" forState:UIControlStateNormal];
         [[self activityIndicatorLogin] stopAnimating];
     }
 }
@@ -275,11 +277,13 @@
 }
 
 - (IBAction)login:(id)sender {
-    [self userLogin];
+    if ([[[sender titleLabel] text] isEqualToString:@"Login"]) {
+        [self userLogin];
+    }
 }
 
 - (IBAction)loginTouchID:(id)sender {
-    [self userLoginTouchID];
+        [self userLoginTouchID];
 }
 
 - (IBAction)textFieldPasswordReturn:(id)sender {

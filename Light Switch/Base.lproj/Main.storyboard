@@ -32,20 +32,16 @@
                                     <action selector="textFieldPasswordReturn:" destination="dCO-HN-IPZ" eventType="editingDidEndOnExit" id="9my-4i-ZhZ"/>
                                 </connections>
                             </textField>
-                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mtL-Ji-c0B">
-                                <rect key="frame" x="281" y="363" width="38" height="30"/>
-                                <animations/>
-                                <state key="normal" title="Login"/>
-                                <connections>
-                                    <action selector="login:" destination="dCO-HN-IPZ" eventType="touchUpInside" id="zMH-8H-hIj"/>
-                                </connections>
-                            </button>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="IP Address" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="HkZ-6y-owm">
                                 <rect key="frame" x="175" y="179" width="250" height="30"/>
                                 <animations/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="numbersAndPunctuation" returnKeyType="next"/>
                             </textField>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" ambiguous="YES" misplaced="YES" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="sdw-UQ-gWL">
+                                <rect key="frame" x="290" y="330" width="20" height="20"/>
+                                <animations/>
+                            </activityIndicatorView>
                             <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cDx-3k-hQW">
                                 <rect key="frame" x="267" y="418" width="67" height="67"/>
                                 <animations/>
@@ -58,10 +54,14 @@
                                     <action selector="loginTouchID:" destination="dCO-HN-IPZ" eventType="touchUpInside" id="MdE-9p-vfC"/>
                                 </connections>
                             </button>
-                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" ambiguous="YES" misplaced="YES" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="sdw-UQ-gWL">
-                                <rect key="frame" x="290" y="368" width="20" height="20"/>
+                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mtL-Ji-c0B">
+                                <rect key="frame" x="281" y="364" width="38" height="30"/>
                                 <animations/>
-                            </activityIndicatorView>
+                                <state key="normal" title="Login"/>
+                                <connections>
+                                    <action selector="login:" destination="dCO-HN-IPZ" eventType="touchUpInside" id="zMH-8H-hIj"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
