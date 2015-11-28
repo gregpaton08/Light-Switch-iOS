@@ -91,8 +91,7 @@
 
 - (IBAction)buttonPressLightOn:(id)sender {
     [self setActivityIndicator:YES];
-    [self lightSwitch:NO];
-    //[self lightSwitch:YES];
+    [self lightSwitch:YES];
 }
 
 - (IBAction)buttonPressLightOff:(id)sender {
