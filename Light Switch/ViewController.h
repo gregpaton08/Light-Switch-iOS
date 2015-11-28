@@ -8,12 +8,16 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ViewController : UIViewController <NSURLSessionDataDelegate, NSURLSessionTaskDelegate>
+@interface ViewController : UIViewController <NSURLSessionDataDelegate, NSURLSessionTaskDelegate> {
+    int _sessionFailureCount;
+}
 
 @property (strong, nonatomic) IBOutlet UIButton *buttonOn;
 @property (strong, nonatomic) IBOutlet UIButton *buttonOff;
 @property (strong, nonatomic) IBOutlet UIButton *buttonCancel;
 @property (strong, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicatorLightSwitch;
+
+@property NSURLSessionDataTask *urlSessionTask;
 
 - (IBAction)buttonPressLightOn:(id)sender;
 - (IBAction)buttonPressLightOff:(id)sender;
