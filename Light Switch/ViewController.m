@@ -16,6 +16,8 @@
 
 @implementation ViewController
 
+#pragma mark - UIViewController methods
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
@@ -30,6 +32,8 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+#pragma mark - Light switch methods
 
 - (void)lightSwitch:(BOOL)on {
     // Get the user defaults
@@ -51,9 +55,28 @@
     [[self urlSessionTask] resume];
 }
 
+#pragma mark - User interaction methods
+
+- (void)logout {
+    [self performSegueWithIdentifier:@"logout" sender:self];
+}
+
+- (void)promptUserToLogout {
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Invalid username and password" message:@"Please try logging in again" preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *actionOkay = [UIAlertAction actionWithTitle:@"Okay" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+            [self logout];
+        }];
+    }];
+    
+    [alert addAction:actionOkay];
+    [self presentViewController:alert animated:YES completion:^{}];
+}
+
 - (void)setActivityIndicator:(BOOL)active {
     [[self buttonOn] setEnabled:!active];
     [[self buttonOff] setEnabled:!active];
+    [[self buttonLogout] setEnabled:!active];
     [[self buttonCancel] setHidden:!active];
     
     if (active) {
@@ -63,6 +86,8 @@
         [[self activityIndicatorLightSwitch] stopAnimating];
     }
 }
+
+#pragma mark - IBAction methods
 
 - (IBAction)buttonPressLightOn:(id)sender {
     [self setActivityIndicator:YES];
@@ -76,7 +101,7 @@
 }
 
 - (IBAction)buttonPressLogout:(id)sender {
-    [self performSegueWithIdentifier:@"logout" sender:self];
+    [self logout];
 }
 
 - (IBAction)buttonPressCancel:(id)sender {
@@ -104,17 +129,15 @@
         completionHandler(NSURLSessionAuthChallengeUseCredential, credentials);
     }
     else {
-//        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-//            [self displaySimpleAlertWithTitle:@"Incorrect username or password" withMessage:@"Try again"];
-//        }];
+        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+            [self promptUserToLogout];
+        }];
         
         completionHandler(NSURLSessionAuthChallengeCancelAuthenticationChallenge, nil);
         
         _sessionFailureCount = 0;
         return;
     }
-    
-    // TODO: handle authenctication failure case
     
     ++_sessionFailureCount;
 }
@@ -143,6 +166,8 @@
                 break;
         }
     }
+    
+    _sessionFailureCount = 0;
 }
 
 @end
