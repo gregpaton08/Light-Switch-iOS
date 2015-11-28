@@ -220,14 +220,15 @@
                 NSLog(@"touch id fail");
                 //message = [NSString stringWithFormat:@"evaluatePolicy: %@", authenticationError.localizedDescription];
                 
-                switch ([authenticationError code])
-                {
-                    case LAErrorUserCancel:
-                        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-                            [self setActivityIndicator:NO];
-                        }];
-                        break;
-                }
+//                switch ([authenticationError code])
+//                {
+//                    case LAErrorUserCancel:
+//                        break;
+//                }
+                
+                [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+                    [self setActivityIndicator:NO];
+                }];
             }
         }];
     }
