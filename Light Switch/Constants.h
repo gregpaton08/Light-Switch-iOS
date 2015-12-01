@@ -19,3 +19,6 @@ FOUNDATION_EXPORT NSString *const LSKeyTouchIDCredentials;
 
 FOUNDATION_EXPORT NSString *const LSServiceLogin;
 FOUNDATION_EXPORT NSString *const LSServiceLoginTID;
+
+FOUNDATION_EXPORT NSString *const IP_ADDR_IPv4;
+FOUNDATION_EXPORT NSString *const IP_ADDR_IPv6;

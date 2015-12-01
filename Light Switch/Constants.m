@@ -18,3 +18,6 @@ NSString *const LSKeyTouchIDCredentials = @"storeCredentialsTouchID";
 
 NSString *const LSServiceLogin = @"login";
 NSString *const LSServiceLoginTID = @"loginTouchID";
+
+NSString *const IP_ADDR_IPv4 = @"ipv4";
+NSString *const IP_ADDR_IPv6 = @"ipv6";

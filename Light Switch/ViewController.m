@@ -9,6 +9,7 @@
 #import "ViewController.h"
 #import "Constants.h"
 #import "SSKeychain.h"
+#import "LSSwitchTableViewCell.h"
 
 @interface ViewController ()
 
@@ -24,8 +25,9 @@
     
     _sessionFailureCount = 0;
     
-    // Hide cancle button until needed
-    [[self buttonCancel] setHidden:YES];
+    [[self tableViewSwitches] registerClass:[LSSwitchTableViewCell class] forCellReuseIdentifier:[LSSwitchTableViewCell getIdentifier]];
+    
+    tableData = [NSArray arrayWithObjects:@"test1", @"test2", nil];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -73,29 +75,13 @@
     [self presentViewController:alert animated:YES completion:^{}];
 }
 
-- (void)setActivityIndicator:(BOOL)active {
-    [[self buttonOn] setEnabled:!active];
-    [[self buttonOff] setEnabled:!active];
-    [[self buttonLogout] setEnabled:!active];
-    [[self buttonCancel] setHidden:!active];
-    
-    if (active) {
-        [[self activityIndicatorLightSwitch] startAnimating];
-    }
-    else {
-        [[self activityIndicatorLightSwitch] stopAnimating];
-    }
-}
-
 #pragma mark - IBAction methods
 
 - (IBAction)buttonPressLightOn:(id)sender {
-    [self setActivityIndicator:YES];
     [self lightSwitch:YES];
 }
 
 - (IBAction)buttonPressLightOff:(id)sender {
-    [self setActivityIndicator:YES];
     [self lightSwitch:NO];
 }
 
@@ -103,17 +89,13 @@
     [self logout];
 }
 
-- (IBAction)buttonPressCancel:(id)sender {
-    [[self urlSessionTask] cancel];
+- (IBAction)buttonPressInsert:(id)sender {
+    tableData = [tableData arrayByAddingObject:@"Test"];
+    [[self tableViewSwitches] reloadData];
 }
 
 - (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didReceiveChallenge:(NSURLAuthenticationChallenge *)challenge completionHandler:(void (^)(NSURLSessionAuthChallengeDisposition, NSURLCredential * _Nullable))completionHandler
 {
-    // Stop activity indicator
-    [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-        [self setActivityIndicator:NO];
-    }];
-    
     if (0 == _sessionFailureCount) {
         // Get username from user defaults
         NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
@@ -144,11 +126,6 @@
 #pragma mark - NSURLSessionTaskDelegate methods
 
 - (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didCompleteWithError:(NSError *)error {
-    // Stop progress animation
-    [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-        [self setActivityIndicator:NO];
-    }];
-    
     if (nil != error && [[error domain] isEqualToString:NSURLErrorDomain]) {
         switch ([error code]) {
             case NSURLErrorCancelled:
@@ -167,6 +144,23 @@
     }
     
     _sessionFailureCount = 0;
+}
+
+#pragma mark - Table View delegate methods
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return [tableData count];
+}
+
+- (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    LSSwitchTableViewCell *cell = (LSSwitchTableViewCell*)[tableView dequeueReusableCellWithIdentifier:[LSSwitchTableViewCell getIdentifier] forIndexPath:indexPath];
+    if (cell == nil) {
+        
+    }
+    
+    //cell.textLabel.text = [tableData objectAtIndex:indexPath.row];
+    
+    return cell;
 }
 
 @end

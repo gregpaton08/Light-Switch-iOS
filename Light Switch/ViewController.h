@@ -8,22 +8,23 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ViewController : UIViewController <NSURLSessionDataDelegate, NSURLSessionTaskDelegate> {
+@interface ViewController : UIViewController <NSURLSessionDataDelegate, NSURLSessionTaskDelegate, UITableViewDelegate, UITableViewDataSource> {
     int _sessionFailureCount;
+    
+    NSArray *tableData;
 }
 
 @property (strong, nonatomic) IBOutlet UIButton *buttonOn;
 @property (strong, nonatomic) IBOutlet UIButton *buttonOff;
-@property (strong, nonatomic) IBOutlet UIButton *buttonCancel;
 @property (strong, nonatomic) IBOutlet UIButton *buttonLogout;
-@property (strong, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicatorLightSwitch;
+@property (strong, nonatomic) IBOutlet UITableView *tableViewSwitches;
 
 @property NSURLSessionDataTask *urlSessionTask;
 
 - (IBAction)buttonPressLightOn:(id)sender;
 - (IBAction)buttonPressLightOff:(id)sender;
 - (IBAction)buttonPressLogout:(id)sender;
-- (IBAction)buttonPressCancel:(id)sender;
+- (IBAction)buttonPressInsert:(id)sender;
 
 @end
 

@@ -22,6 +22,7 @@
 		372CB50B1C08C83D0064F4DE /* SSKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = 372CB5081C08C83D0064F4DE /* SSKeychain.m */; };
 		372CB50C1C08C83D0064F4DE /* SSKeychainQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = 372CB50A1C08C83D0064F4DE /* SSKeychainQuery.m */; };
 		372CB50F1C08D2110064F4DE /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 372CB50E1C08D2110064F4DE /* Constants.m */; };
+		374109901C0D6A170042F2C4 /* LSSwitchTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3741098F1C0D6A170042F2C4 /* LSSwitchTableViewCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -70,6 +71,8 @@
 		372CB50A1C08C83D0064F4DE /* SSKeychainQuery.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSKeychainQuery.m; sourceTree = "<group>"; };
 		372CB50D1C08D2110064F4DE /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		372CB50E1C08D2110064F4DE /* Constants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Constants.m; sourceTree = "<group>"; };
+		3741098E1C0D6A170042F2C4 /* LSSwitchTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LSSwitchTableViewCell.h; sourceTree = "<group>"; };
+		3741098F1C0D6A170042F2C4 /* LSSwitchTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LSSwitchTableViewCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -142,6 +145,8 @@
 				372CB4F61C06820F0064F4DE /* LoginViewController.m */,
 				372CB50D1C08D2110064F4DE /* Constants.h */,
 				372CB50E1C08D2110064F4DE /* Constants.m */,
+				3741098E1C0D6A170042F2C4 /* LSSwitchTableViewCell.h */,
+				3741098F1C0D6A170042F2C4 /* LSSwitchTableViewCell.m */,
 			);
 			path = "Light Switch";
 			sourceTree = "<group>";
@@ -307,6 +312,7 @@
 			files = (
 				372CB4C71C0418200064F4DE /* ViewController.m in Sources */,
 				372CB50C1C08C83D0064F4DE /* SSKeychainQuery.m in Sources */,
+				374109901C0D6A170042F2C4 /* LSSwitchTableViewCell.m in Sources */,
 				372CB50B1C08C83D0064F4DE /* SSKeychain.m in Sources */,
 				372CB4C41C0418200064F4DE /* AppDelegate.m in Sources */,
 				372CB4CD1C0418200064F4DE /* Light_Switch.xcdatamodeld in Sources */,
@@ -539,6 +545,7 @@
 				372CB4EE1C0418200064F4DE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		372CB4EF1C0418200064F4DE /* Build configuration list for PBXNativeTarget "Light SwitchTests" */ = {
 			isa = XCConfigurationList;
@@ -547,6 +554,7 @@
 				372CB4F11C0418200064F4DE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		372CB4F21C0418200064F4DE /* Build configuration list for PBXNativeTarget "Light SwitchUITests" */ = {
 			isa = XCConfigurationList;
@@ -555,6 +563,7 @@
 				372CB4F41C0418200064F4DE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 

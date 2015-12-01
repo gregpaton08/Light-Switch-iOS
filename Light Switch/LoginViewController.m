@@ -11,6 +11,10 @@
 #import "SSKeychain.h"
 #import "Constants.h"
 
+#include <ifaddrs.h>
+#include <arpa/inet.h>
+#include <net/if.h>
+
 @import LocalAuthentication;
 
 @interface LoginViewController ()
@@ -187,6 +191,43 @@
 
 #pragma mark - Login methods
 
+- (void)getIpAddress {
+    NSMutableDictionary *addresses = [NSMutableDictionary dictionaryWithCapacity:8];
+    
+    struct ifaddrs *interfaces;
+    if (!getifaddrs(&interfaces)) {
+        struct ifaddrs *interface;
+        for (interface=interfaces; interface; interface=interface->ifa_next) {
+            if(!(interface->ifa_flags & IFF_UP) /* || (interface->ifa_flags & IFF_LOOPBACK) */ ) {
+                continue; // deeply nested code harder to read
+            }
+            const struct sockaddr_in *addr = (const struct sockaddr_in*)interface->ifa_addr;
+            char addrBuf[ MAX(INET_ADDRSTRLEN, INET6_ADDRSTRLEN) ];
+            if (addr && (addr->sin_family==AF_INET || addr->sin_family==AF_INET6)) {
+                NSString *name = [NSString stringWithUTF8String:interface->ifa_name];
+                NSString *type;
+                if (addr->sin_family == AF_INET) {
+                    if (inet_ntop(AF_INET, &addr->sin_addr, addrBuf, INET_ADDRSTRLEN)) {
+                        type = IP_ADDR_IPv4;
+                    }
+                }
+                else {
+                    const struct sockaddr_in6 *addr6 = (const struct sockaddr_in6*)interface->ifa_addr;
+                    if (inet_ntop(AF_INET6, &addr6->sin6_addr, addrBuf, INET6_ADDRSTRLEN)) {
+                        type = IP_ADDR_IPv6;
+                    }
+                }
+                if (type) {
+                    NSString *key = [NSString stringWithFormat:@"%@/%@", name, type];
+                    addresses[key] = [NSString stringWithUTF8String:addrBuf];
+                }
+            }
+        }
+    }
+    
+    freeifaddrs(interfaces);
+}
+
 - (BOOL)hasWifiForURL:(NSURL*)url {
     NSString *urlString = [url absoluteString];
     
@@ -283,13 +324,14 @@
 # pragma mark - IBAction methods
 
 - (IBAction)login:(id)sender {
-    NSString *title = [[sender titleLabel] text];
-    if ([title isEqualToString:@"Login"]) {
-        [self userLogin];
-    }
-    else if ([title isEqualToString:@"Cancel"]) {
-        [self cancelAuthentication];
-    }
+    [self performSegueWithIdentifier:@"loginSuccess" sender:self];
+//    NSString *title = [[sender titleLabel] text];
+//    if ([title isEqualToString:@"Login"]) {
+//        [self userLogin];
+//    }
+//    else if ([title isEqualToString:@"Cancel"]) {
+//        [self cancelAuthentication];
+//    }
 }
 
 - (IBAction)loginTouchID:(id)sender {
@@ -359,10 +401,11 @@
         }];
     }
     // If task was not cancelled by the user then report error
-    else if (false == [[error localizedDescription] isEqualToString:@"cancelled"]) {
+    else if ([error code] != NSURLErrorCancelled) {
         [[NSOperationQueue mainQueue] addOperationWithBlock:^{
             [self displaySimpleAlertWithTitle:@"Unable to connect to server" withMessage:@"Please check URL and network connection"];
         }];
+        NSLog(@"%zd", [error code]);
     }
 }
 
