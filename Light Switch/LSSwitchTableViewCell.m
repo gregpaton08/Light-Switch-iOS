@@ -27,7 +27,9 @@
     
     if (self) {
         UISwitch *cellSwitch = [[UISwitch alloc] initWithFrame:CGRectZero];
-        self.accessoryView = cellSwitch;
+        [self setAccessoryView:cellSwitch];
+        
+        [self setSelectionStyle:UITableViewCellSelectionStyleNone];
     }
     
     return self;
