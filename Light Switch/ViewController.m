@@ -28,6 +28,8 @@
     [[self tableViewSwitches] registerClass:[LSSwitchTableViewCell class] forCellReuseIdentifier:[LSSwitchTableViewCell getIdentifier]];
     
     tableData = [NSArray arrayWithObjects:@"test1", @"test2", nil];
+    
+    [self setSwitchTableData:[[NSMutableArray alloc] init]];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -95,6 +97,10 @@
 }
 
 - (IBAction)buttonPressAddSwitch:(id)sender {
+    [[self switchTableData] addObject:@{ @"title"    : @"test",
+                                         @"tag"      : [NSNumber numberWithInteger:[[self switchTableData] count]],
+                                         @"status"   : [NSNumber numberWithBool:false] }];
+    [[self tableViewSwitches] reloadData];
 }
 
 - (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didReceiveChallenge:(NSURLAuthenticationChallenge *)challenge completionHandler:(void (^)(NSURLSessionAuthChallengeDisposition, NSURLCredential * _Nullable))completionHandler
@@ -152,14 +158,22 @@
 #pragma mark - Table View delegate methods
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [tableData count];
+    return [[self switchTableData] count];
 }
 
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     LSSwitchTableViewCell *cell = (LSSwitchTableViewCell*)[tableView dequeueReusableCellWithIdentifier:[LSSwitchTableViewCell getIdentifier] forIndexPath:indexPath];
     if (cell) {
-        [[cell textLabel] setText:[tableData objectAtIndex:indexPath.row]];
-        [cell setTag:[tableData count]];
+        NSDictionary *cellData = [[self switchTableData] objectAtIndex:indexPath.row];
+        [[cell textLabel] setText:[cellData objectForKey:@"title"]];
+        NSNumber *tag = [cellData objectForKey:@"tag"];
+        [cell setTag:[tag integerValue]];
+        UISwitch *cellSwitch = (UISwitch*)[cell accessoryView];
+        if (cellSwitch) {
+            NSNumber *status = [cellData objectForKey:@"status"];
+            [cellSwitch setOn:[status boolValue]];
+        }
+        //[cell setTag:[indexPath ]];
         //[cell addAction:@selector(switchChanged:)];
         [cell setTarget:self action:@selector(switchChanged:)];
     }
@@ -170,6 +184,8 @@
 - (void) switchChanged:(id)sender {
     UISwitch* switchControl = sender;
     NSLog( @"The switch %zd is %@", [switchControl tag], switchControl.on ? @"ON" : @"OFF" );
+    
+    [self lightSwitch:[switchControl isOn]];
 }
 
 @end

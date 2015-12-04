@@ -20,6 +20,7 @@
 @property (strong, nonatomic) IBOutlet UITableView *tableViewSwitches;
 
 @property NSURLSessionDataTask *urlSessionTask;
+@property NSMutableArray *switchTableData;
 
 - (IBAction)buttonPressLightOn:(id)sender;
 - (IBAction)buttonPressLightOff:(id)sender;
