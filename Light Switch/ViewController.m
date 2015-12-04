@@ -157,13 +157,19 @@
 
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     LSSwitchTableViewCell *cell = (LSSwitchTableViewCell*)[tableView dequeueReusableCellWithIdentifier:[LSSwitchTableViewCell getIdentifier] forIndexPath:indexPath];
-    if (cell == nil) {
-        
+    if (cell) {
+        [[cell textLabel] setText:[tableData objectAtIndex:indexPath.row]];
+        [cell setTag:[tableData count]];
+        //[cell addAction:@selector(switchChanged:)];
+        [cell setTarget:self action:@selector(switchChanged:)];
     }
     
-    [[cell textLabel] setText:[tableData objectAtIndex:indexPath.row]];
-    
     return cell;
+}
+
+- (void) switchChanged:(id)sender {
+    UISwitch* switchControl = sender;
+    NSLog( @"The switch %zd is %@", [switchControl tag], switchControl.on ? @"ON" : @"OFF" );
 }
 
 @end

@@ -8,12 +8,15 @@
 
 #import <UIKit/UIKit.h>
 
-@interface LSSwitchTableViewCell : UITableViewCell
+@interface LSSwitchTableViewCell : UITableViewCell <NSCoding>
 
-@property NSString *label;
+@property UISwitch *cellSwitch;
+@property SEL selector;
 
-- (void)setCellLabel:(NSString*)label;
+
 - (BOOL)getSwithState;
+- (void)addAction:(SEL)action;
+- (void)setTarget:(id)target action:(SEL)action;
 + (NSString*)getIdentifier;
 
 @end
