@@ -100,7 +100,7 @@
 - (IBAction)buttonPressAddSwitch:(id)sender {
     NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
     [dict setObject:@"test" forKey:@"title"];
-    [dict setObject:[NSNumber numberWithInteger:[[self switchTableData] count]] forKey:@"tag"];
+    [dict setObject:[NSNumber numberWithUnsignedInteger:[[self switchTableData] count]] forKey:@"tag"];
     [dict setObject:[NSNumber numberWithBool:false] forKey:@"status"];
     
     [[self switchTableDataLock] lock];
@@ -171,17 +171,17 @@
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     LSSwitchTableViewCell *cell = (LSSwitchTableViewCell*)[tableView dequeueReusableCellWithIdentifier:[LSSwitchTableViewCell getIdentifier] forIndexPath:indexPath];
     if (cell) {
-        NSDictionary *cellData = [[self switchTableData] objectAtIndex:indexPath.row];
+        NSMutableDictionary *cellData = [[self switchTableData] objectAtIndex:indexPath.row];
         [[cell textLabel] setText:[cellData objectForKey:@"title"]];
         NSNumber *tag = [cellData objectForKey:@"tag"];
-        [cell setTag:[tag integerValue]];
+        [cell setTag:[tag unsignedIntegerValue]];
         UISwitch *cellSwitch = (UISwitch*)[cell accessoryView];
         if (cellSwitch) {
             NSNumber *status = [cellData objectForKey:@"status"];
             [cellSwitch setOn:[status boolValue]];
+            [cellSwitch setTag:[cell tag]];
         }
         //[cell setTag:[indexPath ]];
-        //[cell addAction:@selector(switchChanged:)];
         [cell setTarget:self action:@selector(switchChanged:)];
     }
     
