@@ -39,6 +39,14 @@
     [[self cellSwitch] addTarget:target action:action forControlEvents:UIControlEventValueChanged];
 }
 
+- (void)setTag:(NSInteger)tag {
+    [super setTag:tag];
+    
+    if ([self cellSwitch]) {
+        [[self cellSwitch] setTag:tag];
+    }
+}
+
 + (NSString*)getIdentifier {
     return @"LSSwitchTableViewCellIdentifier";
 }

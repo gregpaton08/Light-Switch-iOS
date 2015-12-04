@@ -13,6 +13,7 @@
 @property UISwitch *cellSwitch;
 
 - (void)setTarget:(id)target action:(SEL)action;
+- (void)setTag:(NSInteger)tag;
 + (NSString*)getIdentifier;
 
 @end

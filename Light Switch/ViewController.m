@@ -179,9 +179,7 @@
         if (cellSwitch) {
             NSNumber *status = [cellData objectForKey:@"status"];
             [cellSwitch setOn:[status boolValue]];
-            [cellSwitch setTag:[cell tag]];
         }
-        //[cell setTag:[indexPath ]];
         [cell setTarget:self action:@selector(switchChanged:)];
     }
     
