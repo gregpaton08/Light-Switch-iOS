@@ -39,6 +39,15 @@
     [self setLabel:label];
 }
 
+- (BOOL)getSwithState {
+    UISwitch *cellSwitch = (UISwitch*)[self accessoryView];
+    if (cellSwitch) {
+        return [cellSwitch isOn];
+    }
+    
+    return false;
+}
+
 + (NSString*)getIdentifier {
     return @"LSSwitchTableViewCellIdentifier";
 }

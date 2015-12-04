@@ -94,6 +94,9 @@
     [[self tableViewSwitches] reloadData];
 }
 
+- (IBAction)buttonPressAddSwitch:(id)sender {
+}
+
 - (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didReceiveChallenge:(NSURLAuthenticationChallenge *)challenge completionHandler:(void (^)(NSURLSessionAuthChallengeDisposition, NSURLCredential * _Nullable))completionHandler
 {
     if (0 == _sessionFailureCount) {

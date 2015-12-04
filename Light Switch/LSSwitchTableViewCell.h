@@ -13,6 +13,7 @@
 @property NSString *label;
 
 - (void)setCellLabel:(NSString*)label;
+- (BOOL)getSwithState;
 + (NSString*)getIdentifier;
 
 @end

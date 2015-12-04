@@ -25,6 +25,7 @@
 - (IBAction)buttonPressLightOff:(id)sender;
 - (IBAction)buttonPressLogout:(id)sender;
 - (IBAction)buttonPressInsert:(id)sender;
+- (IBAction)buttonPressAddSwitch:(id)sender;
 
 @end
 
