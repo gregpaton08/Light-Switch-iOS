@@ -30,6 +30,7 @@
     tableData = [NSArray arrayWithObjects:@"test1", @"test2", nil];
     
     [self setSwitchTableData:[[NSMutableArray alloc] init]];
+    [self setSwitchTableDataLock:[[NSLock alloc] init]];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -97,9 +98,15 @@
 }
 
 - (IBAction)buttonPressAddSwitch:(id)sender {
-    [[self switchTableData] addObject:@{ @"title"    : @"test",
-                                         @"tag"      : [NSNumber numberWithInteger:[[self switchTableData] count]],
-                                         @"status"   : [NSNumber numberWithBool:false] }];
+    NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
+    [dict setObject:@"test" forKey:@"title"];
+    [dict setObject:[NSNumber numberWithInteger:[[self switchTableData] count]] forKey:@"tag"];
+    [dict setObject:[NSNumber numberWithBool:false] forKey:@"status"];
+    
+    [[self switchTableDataLock] lock];
+    [[self switchTableData] addObject:dict];
+    [[self switchTableDataLock] unlock];
+    
     [[self tableViewSwitches] reloadData];
 }
 
@@ -186,6 +193,11 @@
     NSLog( @"The switch %zd is %@", [switchControl tag], switchControl.on ? @"ON" : @"OFF" );
     
     [self lightSwitch:[switchControl isOn]];
+    
+    [[self switchTableDataLock] lock];
+    NSMutableDictionary *dict = [[self switchTableData] objectAtIndex:[switchControl tag]];
+    [dict setObject:[NSNumber numberWithBool:[switchControl isOn]] forKey:@"status"];
+    [[self switchTableDataLock] unlock];
 }
 
 @end

@@ -21,6 +21,7 @@
 
 @property NSURLSessionDataTask *urlSessionTask;
 @property NSMutableArray *switchTableData;
+@property NSLock *switchTableDataLock;
 
 - (IBAction)buttonPressLightOn:(id)sender;
 - (IBAction)buttonPressLightOff:(id)sender;
