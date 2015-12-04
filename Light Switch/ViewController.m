@@ -158,7 +158,7 @@
         
     }
     
-    //cell.textLabel.text = [tableData objectAtIndex:indexPath.row];
+    [[cell textLabel] setText:[tableData objectAtIndex:indexPath.row]];
     
     return cell;
 }
