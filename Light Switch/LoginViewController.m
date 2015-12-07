@@ -324,15 +324,13 @@
 # pragma mark - IBAction methods
 
 - (IBAction)login:(id)sender {
-    
-    [self performSegueWithIdentifier:@"loginSuccess" sender:self];
-//    NSString *title = [[sender titleLabel] text];
-//    if ([title isEqualToString:@"Login"]) {
-//        [self userLogin];
-//    }
-//    else if ([title isEqualToString:@"Cancel"]) {
-//        [self cancelAuthentication];
-//    }
+    NSString *title = [[sender titleLabel] text];
+    if ([title isEqualToString:@"Login"]) {
+        [self userLogin];
+    }
+    else if ([title isEqualToString:@"Cancel"]) {
+        [self cancelAuthentication];
+    }
 }
 
 - (IBAction)loginTouchID:(id)sender {
