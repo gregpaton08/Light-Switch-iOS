@@ -20,7 +20,7 @@
 @property (strong, nonatomic) IBOutlet UITableView *tableViewSwitches;
 
 @property NSURLSessionDataTask *urlSessionTask;
-@property NSMutableArray *switchTableData;
+@property NSMutableDictionary *switchTableData;
 @property NSLock *switchTableDataLock;
 
 - (IBAction)buttonPressLightOn:(id)sender;

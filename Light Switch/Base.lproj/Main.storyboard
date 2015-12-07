@@ -208,7 +208,11 @@
                                                 <segue destination="BYZ-38-t0r" kind="presentation" id="KWT-85-INf"/>
                                             </connections>
                                         </barButtonItem>
-                                        <barButtonItem key="rightBarButtonItem" title="Save" id="fo6-SD-7Ud"/>
+                                        <barButtonItem key="rightBarButtonItem" title="Save" id="fo6-SD-7Ud">
+                                            <connections>
+                                                <segue destination="BYZ-38-t0r" kind="presentation" id="R0p-e6-jZb"/>
+                                            </connections>
+                                        </barButtonItem>
                                     </navigationItem>
                                 </items>
                                 <userDefinedRuntimeAttributes>
@@ -217,15 +221,31 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </navigationBar>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="umS-eo-DKe">
+                                <rect key="frame" x="170" y="156" width="260" height="30"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="URL" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="lOj-f6-WVq">
+                                <rect key="frame" x="170" y="210" width="260" height="30"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="jm2-ZG-bCl" firstAttribute="centerX" secondItem="PR9-Ve-KQr" secondAttribute="centerX" id="Aqz-K4-3fe"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="jm2-ZG-bCl" secondAttribute="trailing" constant="-20" id="aoT-4e-Doy"/>
-                            <constraint firstItem="jm2-ZG-bCl" firstAttribute="leading" secondItem="PR9-Ve-KQr" secondAttribute="leadingMargin" constant="-20" id="jSe-k7-KwN"/>
+                            <constraint firstItem="jm2-ZG-bCl" firstAttribute="leading" secondItem="PR9-Ve-KQr" secondAttribute="leadingMargin" constant="-20" id="Kc4-Yu-uq3"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="jm2-ZG-bCl" secondAttribute="trailing" constant="-20" id="vmA-Je-DNX"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="textFieldName" destination="umS-eo-DKe" id="kCT-fK-Jy6"/>
+                        <outlet property="textFieldURL" destination="lOj-f6-WVq" id="Byn-iL-RYl"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YtO-uu-qlO" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

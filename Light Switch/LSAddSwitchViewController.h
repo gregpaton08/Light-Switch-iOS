@@ -10,4 +10,7 @@
 
 @interface LSAddSwitchViewController : UIViewController
 
+@property (strong, nonatomic) IBOutlet UITextField *textFieldName;
+@property (strong, nonatomic) IBOutlet UITextField *textFieldURL;
+
 @end
