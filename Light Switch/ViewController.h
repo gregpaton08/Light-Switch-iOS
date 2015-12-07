@@ -10,8 +10,6 @@
 
 @interface ViewController : UIViewController <NSURLSessionDataDelegate, NSURLSessionTaskDelegate, UITableViewDelegate, UITableViewDataSource> {
     int _sessionFailureCount;
-    
-    NSArray *tableData;
 }
 
 @property (strong, nonatomic) IBOutlet UIButton *buttonOn;
@@ -26,8 +24,8 @@
 - (IBAction)buttonPressLightOn:(id)sender;
 - (IBAction)buttonPressLightOff:(id)sender;
 - (IBAction)buttonPressLogout:(id)sender;
-- (IBAction)buttonPressInsert:(id)sender;
 - (IBAction)buttonPressAddSwitch:(id)sender;
+- (IBAction)buttonPressEdit:(id)sender;
 
 @end
 

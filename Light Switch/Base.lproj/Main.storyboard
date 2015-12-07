@@ -113,19 +113,11 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LUv-ia-cR2">
-                                <rect key="frame" x="20" y="78" width="40" height="40"/>
+                                <rect key="frame" x="88" y="75" width="40" height="40"/>
                                 <animations/>
                                 <state key="normal" title="On"/>
                                 <connections>
                                     <action selector="buttonPressLightOn:" destination="BYZ-38-t0r" eventType="touchUpInside" id="T8S-Aj-0jz"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rlb-0V-zLf">
-                                <rect key="frame" x="20" y="20" width="55" height="50"/>
-                                <animations/>
-                                <state key="normal" title="Logout"/>
-                                <connections>
-                                    <action selector="buttonPressLogout:" destination="BYZ-38-t0r" eventType="touchUpInside" id="xh6-mA-3w0"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9VA-ZX-3KA">
@@ -145,14 +137,6 @@
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="E2R-a3-bmz"/>
                                 </connections>
                             </tableView>
-                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="U0q-7p-znp">
-                                <rect key="frame" x="280" y="83" width="40" height="30"/>
-                                <animations/>
-                                <state key="normal" title="Insert"/>
-                                <connections>
-                                    <action selector="buttonPressInsert:" destination="BYZ-38-t0r" eventType="touchUpInside" id="6lR-bE-O3r"/>
-                                </connections>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="U7Z-4D-dWw">
                                 <rect key="frame" x="546" y="73" width="40" height="40"/>
                                 <animations/>
@@ -162,15 +146,41 @@
                                     <segue destination="E47-OR-6as" kind="presentation" identifier="addSwitch" id="Eh9-DJ-5Sb"/>
                                 </connections>
                             </button>
+                            <navigationBar contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qz0-rC-uLl">
+                                <rect key="frame" x="0.0" y="20" width="600" height="44"/>
+                                <animations/>
+                                <items>
+                                    <navigationItem title="Switches" id="KYh-tR-eSH">
+                                        <barButtonItem key="leftBarButtonItem" title="Edit" id="Uuz-Lg-rsf">
+                                            <connections>
+                                                <action selector="buttonPressEdit:" destination="BYZ-38-t0r" id="945-gp-0vD"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
+                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rlb-0V-zLf">
+                                <rect key="frame" x="13" y="70" width="55" height="50"/>
+                                <animations/>
+                                <state key="normal" title="Logout"/>
+                                <connections>
+                                    <action selector="buttonPressLogout:" destination="BYZ-38-t0r" eventType="touchUpInside" id="xh6-mA-3w0"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="qz0-rC-uLl" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-20" id="DZb-Px-7pD"/>
+                            <constraint firstItem="aiE-oK-Jhj" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-20" id="PEk-p1-efV"/>
                             <constraint firstItem="aiE-oK-Jhj" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Pim-hG-XlT"/>
-                            <constraint firstItem="U0q-7p-znp" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Tay-y2-uEs"/>
+                            <constraint firstItem="qz0-rC-uLl" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Ql1-Wi-wqy"/>
+                            <constraint firstItem="rlb-0V-zLf" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-7" id="WYh-iy-Kqa"/>
                             <constraint firstItem="LUv-ia-cR2" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" constant="-100" id="ZgV-4r-55z"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="aiE-oK-Jhj" secondAttribute="trailing" id="bth-fa-Kor"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="aiE-oK-Jhj" secondAttribute="trailing" constant="-20" id="bAK-rT-OeA"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="qz0-rC-uLl" secondAttribute="trailing" constant="-20" id="jIn-O8-2pT"/>
                             <constraint firstItem="9VA-ZX-3KA" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" constant="100" id="jaU-16-SRZ"/>
+                            <constraint firstItem="LUv-ia-cR2" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="68" id="jge-rh-0F3"/>
                             <constraint firstAttribute="trailingMargin" secondItem="U7Z-4D-dWw" secondAttribute="trailing" constant="15" id="wOE-CD-blL"/>
                         </constraints>
                     </view>

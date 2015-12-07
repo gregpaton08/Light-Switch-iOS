@@ -28,12 +28,14 @@
     
     [[self tableViewSwitches] registerClass:[LSSwitchTableViewCell class] forCellReuseIdentifier:[LSSwitchTableViewCell getIdentifier]];
     
-    tableData = [NSArray arrayWithObjects:@"test1", @"test2", nil];
-    
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSData *data = [defaults objectForKey:LSKeySwitchTableInfo];
+    NSDictionary *dict = nil;
     if (data) {
-        NSDictionary *dict = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+        dict = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+    }
+    
+    if (dict) {
         [self setSwitchTableData:[dict mutableCopy]];
     }
     else {
@@ -108,11 +110,6 @@
     [self logout];
 }
 
-- (IBAction)buttonPressInsert:(id)sender {
-    tableData = [tableData arrayByAddingObject:@"Test"];
-    [[self tableViewSwitches] reloadData];
-}
-
 - (IBAction)buttonPressAddSwitch:(id)sender {
     NSNumber *tag = [NSNumber numberWithUnsignedInteger:[[self switchTableData] count]];
     LSSwitchInfo *switchInfo = [[LSSwitchInfo alloc] init];
@@ -125,6 +122,18 @@
     [[self switchTableDataLock] unlock];
     
     [[self tableViewSwitches] reloadData];
+}
+
+- (IBAction)buttonPressEdit:(id)sender {
+    [[self tableViewSwitches] setEditing:![[self tableViewSwitches] isEditing] animated:YES];
+    
+    UIBarButtonItem *barButtonItem = (UIBarButtonItem*)sender;
+    if ([[self tableViewSwitches] isEditing]) {
+        [barButtonItem setTitle:@"Done"];
+    }
+    else {
+        [barButtonItem setTitle:@"Edit"];
+    }
 }
 
 - (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didReceiveChallenge:(NSURLAuthenticationChallenge *)challenge completionHandler:(void (^)(NSURLSessionAuthChallengeDisposition, NSURLCredential * _Nullable))completionHandler
@@ -201,6 +210,18 @@
     return cell;
 }
 
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (UITableViewCellEditingStyleDelete == editingStyle) {
+        //[[self switchTableData] removeObjectForKey:[NSNumber numberWithInteger:indexPath.row]];
+        //[self saveSwitchTableData];
+        //[[self tableViewSwitches] deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+    }
+}
+
+- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return UITableViewCellEditingStyleDelete;
+}
+
 - (void) switchChanged:(id)sender {
     UISwitch* switchControl = sender;
     NSLog( @"The switch %zd is %@", [switchControl tag], switchControl.on ? @"ON" : @"OFF" );
@@ -210,6 +231,29 @@
     [[self switchTableDataLock] lock];
     LSSwitchInfo *switchInfo = [[self switchTableData] objectForKey:[NSNumber numberWithInteger:[switchControl tag]]];
     [switchInfo setStatus:[switchControl isOn]];
+    [[self switchTableDataLock] unlock];
+}
+
+- (void)saveSwitchTableData {
+    [[self switchTableDataLock] lock];
+    NSData *data = [NSKeyedArchiver archivedDataWithRootObject:[self switchTableData]];
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setObject:data forKey:LSKeySwitchTableInfo];
+    [defaults synchronize];
+    [[self switchTableDataLock] unlock];
+}
+
+- (void)loadSwitchTableData {
+    [[self switchTableDataLock] lock];
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSData *data = [defaults objectForKey:LSKeySwitchTableInfo];
+    if (data) {
+        NSDictionary *dict = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+        [self setSwitchTableData:[dict mutableCopy]];
+    }
+    else {
+        [self setSwitchTableData:[[NSMutableDictionary alloc] init]];
+    }
     [[self switchTableDataLock] unlock];
 }
 
