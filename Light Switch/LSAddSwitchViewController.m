@@ -50,9 +50,10 @@
         [switchInfo setUrl:[[self textFieldURL] text]];
         
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-        NSDictionary *dict = [defaults dictionaryForKey:LSKeySwitchTableInfo];
+        NSData *data = [defaults objectForKey:LSKeySwitchTableInfo];
         NSMutableDictionary *switchTableInfo;
-        if (dict) {
+        if (data) {
+            NSDictionary *dict = [NSKeyedUnarchiver unarchiveObjectWithData:data];
             switchTableInfo = [dict mutableCopy];
         }
         else {
@@ -64,7 +65,7 @@
         
         [switchTableInfo setObject:switchInfo forKey:tag];
         
-        NSData *data = [NSKeyedArchiver archivedDataWithRootObject:switchTableInfo];
+        data = [NSKeyedArchiver archivedDataWithRootObject:switchTableInfo];
         [defaults setObject:data forKey:LSKeySwitchTableInfo];
     }
     

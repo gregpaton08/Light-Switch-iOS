@@ -48,6 +48,12 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    NSData *data = [NSKeyedArchiver archivedDataWithRootObject:[self switchTableData]];
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setObject:data forKey:LSKeySwitchTableInfo];
+}
+
 #pragma mark - Light switch methods
 
 - (void)lightSwitch:(BOOL)on {
