@@ -87,11 +87,19 @@
 #pragma mark - IBAction methods
 
 - (IBAction)buttonPressLightOn:(id)sender {
-    [self lightSwitch:YES];
+    //[self lightSwitch:YES];
+    [self.navigationItem setLeftBarButtonItem:nil animated:NO];
+    self.navigationController.navigationBar.backItem.hidesBackButton = YES;
+    self.navigationItem.hidesBackButton = YES;
+    
+    [self setNavigationItemEdit:[[self navigationBarSwitches] popNavigationItemAnimated:YES]];
 }
 
 - (IBAction)buttonPressLightOff:(id)sender {
-    [self lightSwitch:NO];
+    //[self lightSwitch:NO];
+    if ([self navigationItemEdit]) {
+        [[self navigationBarSwitches] pushNavigationItem:[self navigationItemEdit] animated:YES];
+    }
 }
 
 - (IBAction)buttonPressLogout:(id)sender {
@@ -113,6 +121,10 @@
 }
 
 - (IBAction)buttonPressEdit:(id)sender {
+    if (0 == [[self switchTableData] count]) {
+        return;
+    }
+    
     [[self tableViewSwitches] setEditing:![[self tableViewSwitches] isEditing] animated:YES];
     
     UIBarButtonItem *barButtonItem = (UIBarButtonItem*)sender;
@@ -212,8 +224,6 @@
     if (UITableViewCellEditingStyleDelete == editingStyle) {
         [[self switchTableData] removeObjectAtIndex:indexPath.row];
         [self saveSwitchTableData];
-        
-        //[[self tableViewSwitches] deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
         [[self tableViewSwitches] reloadData];
     }
 }

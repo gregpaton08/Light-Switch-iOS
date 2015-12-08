@@ -185,9 +185,11 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="buttonEdit" destination="Uuz-Lg-rsf" id="1C6-Fb-U6j"/>
                         <outlet property="buttonLogout" destination="rlb-0V-zLf" id="Yrc-Uw-ikZ"/>
                         <outlet property="buttonOff" destination="9VA-ZX-3KA" id="0a0-2d-Jaa"/>
                         <outlet property="buttonOn" destination="LUv-ia-cR2" id="W3y-MZ-bOm"/>
+                        <outlet property="navigationBarSwitches" destination="qz0-rC-uLl" id="Gxi-1E-CTu"/>
                         <outlet property="tableViewSwitches" destination="aiE-oK-Jhj" id="0Fu-j1-v7t"/>
                         <segue destination="dCO-HN-IPZ" kind="presentation" identifier="logout" id="WDL-0H-7rr"/>
                     </connections>
@@ -231,14 +233,14 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </navigationBar>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="umS-eo-DKe">
-                                <rect key="frame" x="170" y="156" width="260" height="30"/>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="umS-eo-DKe">
+                                <rect key="frame" x="121" y="157" width="358" height="30"/>
                                 <animations/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="URL" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="lOj-f6-WVq">
-                                <rect key="frame" x="170" y="210" width="260" height="30"/>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="URL" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="lOj-f6-WVq">
+                                <rect key="frame" x="121" y="210" width="358" height="30"/>
                                 <animations/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
@@ -249,6 +251,8 @@
                         <constraints>
                             <constraint firstItem="jm2-ZG-bCl" firstAttribute="centerX" secondItem="PR9-Ve-KQr" secondAttribute="centerX" id="Aqz-K4-3fe"/>
                             <constraint firstItem="jm2-ZG-bCl" firstAttribute="leading" secondItem="PR9-Ve-KQr" secondAttribute="leadingMargin" constant="-20" id="Kc4-Yu-uq3"/>
+                            <constraint firstItem="lOj-f6-WVq" firstAttribute="centerX" secondItem="PR9-Ve-KQr" secondAttribute="centerX" id="Lqd-3F-Qy0"/>
+                            <constraint firstItem="umS-eo-DKe" firstAttribute="centerX" secondItem="PR9-Ve-KQr" secondAttribute="centerX" id="Sai-N8-B2f"/>
                             <constraint firstAttribute="trailingMargin" secondItem="jm2-ZG-bCl" secondAttribute="trailing" constant="-20" id="vmA-Je-DNX"/>
                         </constraints>
                     </view>

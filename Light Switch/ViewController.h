@@ -15,6 +15,9 @@
 @property (strong, nonatomic) IBOutlet UIButton *buttonOn;
 @property (strong, nonatomic) IBOutlet UIButton *buttonOff;
 @property (strong, nonatomic) IBOutlet UIButton *buttonLogout;
+@property (strong, nonatomic) IBOutlet UIBarButtonItem *buttonEdit;
+@property (strong, nonatomic) IBOutlet UINavigationBar *navigationBarSwitches;
+@property (strong, nonatomic) IBOutlet UINavigationItem *navigationItemEdit;
 @property (strong, nonatomic) IBOutlet UITableView *tableViewSwitches;
 
 @property NSURLSessionDataTask *urlSessionTask;
