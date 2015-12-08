@@ -220,7 +220,7 @@
                                         </barButtonItem>
                                         <barButtonItem key="rightBarButtonItem" title="Save" id="fo6-SD-7Ud">
                                             <connections>
-                                                <segue destination="BYZ-38-t0r" kind="presentation" id="R0p-e6-jZb"/>
+                                                <segue destination="BYZ-38-t0r" kind="presentation" identifier="addSwitchSave" id="R0p-e6-jZb"/>
                                             </connections>
                                         </barButtonItem>
                                     </navigationItem>
@@ -266,6 +266,6 @@
         <image name="Touch-icon-lg" width="138" height="138"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="KWT-85-INf"/>
+        <segue reference="R0p-e6-jZb"/>
     </inferredMetricsTieBreakers>
 </document>

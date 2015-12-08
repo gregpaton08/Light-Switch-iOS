@@ -18,7 +18,7 @@
 @property (strong, nonatomic) IBOutlet UITableView *tableViewSwitches;
 
 @property NSURLSessionDataTask *urlSessionTask;
-@property NSMutableDictionary *switchTableData;
+@property NSMutableArray *switchTableData;
 @property NSLock *switchTableDataLock;
 
 - (IBAction)buttonPressLightOn:(id)sender;
@@ -26,6 +26,8 @@
 - (IBAction)buttonPressLogout:(id)sender;
 - (IBAction)buttonPressAddSwitch:(id)sender;
 - (IBAction)buttonPressEdit:(id)sender;
+
+- (void)addSwitchWithTitle:(NSString*)title withSwitchName:(NSString*)name;
 
 @end
 
