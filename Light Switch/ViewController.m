@@ -125,12 +125,11 @@
 }
 
 - (void)addSwitchWithTitle:(NSString *)title withSwitchName:(NSString *)name {
+    [self loadSwitchTableData];
     LSSwitchInfo *switchInfo = [[LSSwitchInfo alloc] init];
     [switchInfo setTitle:title];
     [switchInfo setUrl:name];
-    [switchInfo setTag:[[self switchTableData] count]];
-    
-    [self loadSwitchTableData];
+    [switchInfo setTag:[[self switchTableData] count]];    
     [[self switchTableData] addObject:switchInfo];
     [self saveSwitchTableData];
 }
