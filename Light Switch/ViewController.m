@@ -47,10 +47,7 @@
 #pragma mark - Light switch methods
 
 - (void)lightSwitch:(BOOL)on {
-    // Get the user defaults
-    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    
-    NSURL *defaultURL = [userDefaults URLForKey:LSKeyURL];
+    NSURL *defaultURL = [self getDefaultURL];
     NSURL *url;
     if (on) {
         url = [defaultURL URLByAppendingPathComponent:@"/light_on"];
@@ -64,6 +61,25 @@
     
     [self setUrlSessionTask:[session dataTaskWithURL:url]];
     [[self urlSessionTask] resume];
+}
+
+- (NSDictionary*)getSwitches {
+    NSDictionary *dict = nil;
+    
+    NSURL *defaultURL = [self getDefaultURL];
+    NSURL *url = [defaultURL URLByAppendingPathComponent:@"/switches/API/v1.0/switches"];
+    
+    NSURLSessionConfiguration *config = [NSURLSessionConfiguration defaultSessionConfiguration];
+    NSURLSession *session = [NSURLSession sessionWithConfiguration:config delegate:self delegateQueue:nil];
+    
+    NSURLSessionDataTask *dataTask = [session dataTaskWithURL:url completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        NSError *err = nil;
+        NSArray *jsonArray = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&err];
+        NSLog(@"%@", jsonArray);
+    }];
+    [dataTask resume];
+    
+    return dict;
 }
 
 #pragma mark - User interaction methods
@@ -87,12 +103,14 @@
 #pragma mark - IBAction methods
 
 - (IBAction)buttonPressLightOn:(id)sender {
-    //[self lightSwitch:YES];
-    [self.navigationItem setLeftBarButtonItem:nil animated:NO];
-    self.navigationController.navigationBar.backItem.hidesBackButton = YES;
-    self.navigationItem.hidesBackButton = YES;
+//    [self lightSwitch:YES];
+//    [self.navigationItem setLeftBarButtonItem:nil animated:NO];
+//    self.navigationController.navigationBar.backItem.hidesBackButton = YES;
+//    self.navigationItem.hidesBackButton = YES;
+//    
+//    [self setNavigationItemEdit:[[self navigationBarSwitches] popNavigationItemAnimated:YES]];
     
-    [self setNavigationItemEdit:[[self navigationBarSwitches] popNavigationItemAnimated:YES]];
+    [self getSwitches];
 }
 
 - (IBAction)buttonPressLightOff:(id)sender {
@@ -197,7 +215,16 @@
     
     _sessionFailureCount = 0;
 }
-
+/*
+- (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveResponse:(NSURLResponse *)response completionHandler:(void (^)(NSURLSessionResponseDisposition))completionHandler {
+    
+}
+*/
+/*
+- (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveData:(NSData *)data {
+    
+}
+*/
 #pragma mark - Table View delegate methods
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -269,6 +296,13 @@
         [self setSwitchTableData:[[NSMutableArray alloc] init]];
     }
     [[self switchTableDataLock] unlock];
+}
+
+#pragma mark - Helper methods
+
+- (NSURL*)getDefaultURL {
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    return [userDefaults URLForKey:LSKeyURL];
 }
 
 @end
