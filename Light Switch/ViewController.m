@@ -11,6 +11,7 @@
 #import "SSKeychain.h"
 #import "LSSwitchTableViewCell.h"
 #import "LSSwitchInfo.h"
+#import "LSAddSwitchViewController.h"
 
 @interface ViewController ()
 
@@ -34,6 +35,8 @@
     
     [self setAvailableSwitches:[[NSMutableArray alloc] init]];
     [self setAvailableSwitchesLock:[[NSLock alloc] init]];
+    
+    [self getSwitches];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -45,6 +48,13 @@
     NSData *data = [NSKeyedArchiver archivedDataWithRootObject:[self switchTableData]];
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults setObject:data forKey:LSKeySwitchTableInfo];
+    
+    LSAddSwitchViewController *addSwitchViewController = (LSAddSwitchViewController*)segue.destinationViewController;
+    if (addSwitchViewController) {
+        [[self availableSwitchesLock] lock];
+        [addSwitchViewController updateSwitchInfo:[self availableSwitches]];
+        [[self availableSwitchesLock] unlock];
+    }
 }
 
 #pragma mark - Light switch methods
@@ -95,7 +105,11 @@
         NSArray *switchArray = [jsonDict objectForKey:@"switches"];
         
         for (NSDictionary *dict in switchArray) {
-            [[self availableSwitches] addObject:dict];
+            LSSwitchInfo *info = [[LSSwitchInfo alloc] init];
+            [info setTitle:[dict objectForKey:@"title"]];
+            [info setStatus:[dict objectForKey:@"status"]];
+            [info setSwitchId:[[dict objectForKey:@"id"] integerValue]];
+            [[self availableSwitches] addObject:info];
         }
         
         [[self availableSwitchesLock] unlock];

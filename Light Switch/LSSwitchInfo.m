@@ -14,8 +14,10 @@
     self = [super init];
     if (self) {
         [self setTitle:[NSString alloc]];
+        [self setTag:-1];
         [self setStatus:false];
         [self setUrl:[NSString alloc]];
+        [self setSwitchId:-1];
     }
     
     return self;

@@ -14,5 +14,6 @@
 @property NSInteger tag;
 @property BOOL status;
 @property NSString *url;
+@property NSInteger switchId;
 
 @end

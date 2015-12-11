@@ -9,6 +9,7 @@
 #import "LSAddSwitchViewController.h"
 #import "LSSwitchInfo.h"
 #import "Constants.h"
+#import "LSSwitchInfo.h"
 #import "ViewController.h"
 
 @interface LSAddSwitchViewController ()
@@ -20,6 +21,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
+    [[self pickerViewSwitch] setDelegate:self];
+    [[self pickerViewSwitch] setDataSource:self];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -83,6 +87,38 @@
     }
     
     return YES;
+}
+
+- (void)updateSwitchInfo:(NSMutableArray*)info {
+    //[self setSwitchInfo:[[NSMutableArray alloc] init]];
+    [self setSwitchInfo:[NSMutableArray arrayWithArray:info]];
+}
+
+#pragma mark - UIPickerViewDelegate methods
+
+- (NSString*)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
+    if (0 == component) {
+        if (row < [[self switchInfo] count]) {
+            LSSwitchInfo *info = [[self switchInfo] objectAtIndex:row];
+            return [info title];
+        }
+    }
+    
+    return nil;
+}
+
+#pragma mark - UIPickerViewDataSource methods
+
+- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
+    return 1;
+}
+
+- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
+    if (0 == component) {
+        return 1;
+    }
+    
+    return 0;
 }
 
 @end

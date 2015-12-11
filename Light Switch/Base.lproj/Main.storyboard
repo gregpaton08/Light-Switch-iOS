@@ -303,6 +303,10 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
+                            <pickerView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Cl8-aC-hCb">
+                                <rect key="frame" x="0.0" y="258" width="600" height="216"/>
+                                <animations/>
+                            </pickerView>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -315,6 +319,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="pickerViewSwitch" destination="Cl8-aC-hCb" id="pcH-zj-3AG"/>
                         <outlet property="textFieldName" destination="umS-eo-DKe" id="kCT-fK-Jy6"/>
                         <outlet property="textFieldURL" destination="lOj-f6-WVq" id="Byn-iL-RYl"/>
                     </connections>
@@ -328,6 +333,6 @@
         <image name="Touch-icon-lg" width="138" height="138"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="LpG-4P-EuD"/>
+        <segue reference="R0p-e6-jZb"/>
     </inferredMetricsTieBreakers>
 </document>
