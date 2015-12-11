@@ -82,6 +82,12 @@
         
         NSLog(@"%@", jsonDict);
         
+        NSArray *switchArray = [jsonDict objectForKey:@"switches"];
+        
+        for (NSDictionary *dict in switchArray) {
+            [[self availableSwitches] addObject:dict];
+        }
+        
         //NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
         //[dict setObject:@"value" forKey:@"key"];
         
@@ -112,14 +118,16 @@
 #pragma mark - IBAction methods
 
 - (IBAction)buttonPressLightOn:(id)sender {
+#if 0
     [self lightSwitch:YES];
     [self.navigationItem setLeftBarButtonItem:nil animated:NO];
     self.navigationController.navigationBar.backItem.hidesBackButton = YES;
     self.navigationItem.hidesBackButton = YES;
     
     [self setNavigationItemEdit:[[self navigationBarSwitches] popNavigationItemAnimated:YES]];
-    
-    //[self getSwitches];
+#else
+    [self getSwitches];
+#endif
 }
 
 - (IBAction)buttonPressLightOff:(id)sender {
