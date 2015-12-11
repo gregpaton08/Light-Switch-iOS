@@ -47,7 +47,7 @@
     
     // If credentials for touch ID have been stored then prompt user to login via touch ID
     if ([userDefaults stringForKey:LSKeyUsernameTID] &&
-        [userDefaults stringForKey:LSKeyURLTID] &&
+        [userDefaults URLForKey:LSKeyURLTID] &&
         [userDefaults boolForKey:@"appLaunch"] &&
         [userDefaults boolForKey:@"storeCredentialsTouchID"]) {
         [self userLoginTouchID];
