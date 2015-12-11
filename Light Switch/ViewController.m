@@ -31,6 +31,9 @@
     [self loadSwitchTableData];
     
     [self setSwitchTableDataLock:[[NSLock alloc] init]];
+    
+    [self setAvailableSwitches:[[NSMutableArray alloc] init]];
+    [self setAvailableSwitchesLock:[[NSLock alloc] init]];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -63,9 +66,7 @@
     [[self urlSessionTask] resume];
 }
 
-- (NSDictionary*)getSwitches {
-    NSDictionary *dict = nil;
-    
+- (void)getSwitches {
     NSURL *defaultURL = [self getDefaultURL];
     NSURL *url = [defaultURL URLByAppendingPathComponent:@"/switches/API/v1.0/switches"];
     
@@ -74,12 +75,20 @@
     
     NSURLSessionDataTask *dataTask = [session dataTaskWithURL:url completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         NSError *err = nil;
-        NSArray *jsonArray = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&err];
-        NSLog(@"%@", jsonArray);
+        NSDictionary *jsonDict = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&err];
+        NSLog(@"%@", jsonDict);
+        
+        [[self availableSwitchesLock] lock];
+        
+        NSLog(@"%@", jsonDict);
+        
+        //NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
+        //[dict setObject:@"value" forKey:@"key"];
+        
+        [[self availableSwitchesLock] unlock];
     }];
-    [dataTask resume];
     
-    return dict;
+    [dataTask resume];
 }
 
 #pragma mark - User interaction methods
@@ -103,18 +112,18 @@
 #pragma mark - IBAction methods
 
 - (IBAction)buttonPressLightOn:(id)sender {
-//    [self lightSwitch:YES];
-//    [self.navigationItem setLeftBarButtonItem:nil animated:NO];
-//    self.navigationController.navigationBar.backItem.hidesBackButton = YES;
-//    self.navigationItem.hidesBackButton = YES;
-//    
-//    [self setNavigationItemEdit:[[self navigationBarSwitches] popNavigationItemAnimated:YES]];
+    [self lightSwitch:YES];
+    [self.navigationItem setLeftBarButtonItem:nil animated:NO];
+    self.navigationController.navigationBar.backItem.hidesBackButton = YES;
+    self.navigationItem.hidesBackButton = YES;
     
-    [self getSwitches];
+    [self setNavigationItemEdit:[[self navigationBarSwitches] popNavigationItemAnimated:YES]];
+    
+    //[self getSwitches];
 }
 
 - (IBAction)buttonPressLightOff:(id)sender {
-    //[self lightSwitch:NO];
+    [self lightSwitch:NO];
     if ([self navigationItemEdit]) {
         [[self navigationBarSwitches] pushNavigationItem:[self navigationItemEdit] animated:YES];
     }

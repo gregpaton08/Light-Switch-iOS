@@ -24,6 +24,9 @@
 @property NSMutableArray *switchTableData;
 @property NSLock *switchTableDataLock;
 
+@property NSMutableArray *availableSwitches;
+@property NSLock *availableSwitchesLock;
+
 - (IBAction)buttonPressLightOn:(id)sender;
 - (IBAction)buttonPressLightOff:(id)sender;
 - (IBAction)buttonPressLogout:(id)sender;
