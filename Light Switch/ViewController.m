@@ -49,25 +49,9 @@
 
 #pragma mark - Light switch methods
 
-- (void)lightSwitch:(BOOL)on {
-#if 0
+- (void)lightSwitch:(BOOL)on forSwitch:(NSInteger*)switchId {
     NSURL *defaultURL = [self getDefaultURL];
-    NSURL *url;
-    if (on) {
-        url = [defaultURL URLByAppendingPathComponent:@"/light_on"];
-    }
-    else {
-        url = [defaultURL URLByAppendingPathComponent:@"/light_off"];
-    }
-    
-    NSURLSessionConfiguration *config = [NSURLSessionConfiguration defaultSessionConfiguration];
-    NSURLSession *session = [NSURLSession sessionWithConfiguration:config delegate:self delegateQueue:nil];
-    
-    [self setUrlSessionTask:[session dataTaskWithURL:url]];
-    [[self urlSessionTask] resume];
-#else
-    NSURL *defaultURL = [self getDefaultURL];
-    NSURL *url = [defaultURL URLByAppendingPathComponent:@"/switches/API/v1.0/switches/0"];
+    NSURL *url = [defaultURL URLByAppendingPathComponent:[NSString stringWithFormat:@"/switches/API/v1.0/switches/%zd", switchId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:60.0];
     
     NSString *putData = [NSString stringWithFormat:@"{\"status\":%@}", on ? @"true" : @"false"];
@@ -86,7 +70,10 @@
     }];
     
     [putDataTask resume];
-#endif
+}
+
+- (void) lightSwitch:(BOOL)on {
+    [self lightSwitch:on forSwitch:0];
 }
 
 - (void)getSwitches {
@@ -271,13 +258,20 @@
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     LSSwitchTableViewCell *cell = (LSSwitchTableViewCell*)[tableView dequeueReusableCellWithIdentifier:[LSSwitchTableViewCell getIdentifier] forIndexPath:indexPath];
     if (cell) {
+        // Get the switch info for this cell
         LSSwitchInfo *switchInfo = (LSSwitchInfo*)[[self switchTableData] objectAtIndex:indexPath.row];
+        // Update the switches tag to its current location in the table
+        [switchInfo setTag:indexPath.row];
+        // Update the cell title
         [[cell textLabel] setText:[switchInfo title]];
+        // Update the cell tag (needed for the switch change handler)
         [cell setTag:[switchInfo tag]];
+        // Update the cell UISwitch with the current status of the switch
         UISwitch *cellSwitch = (UISwitch*)[cell accessoryView];
         if (cellSwitch) {
             [cellSwitch setOn:[switchInfo status]];
         }
+        // Set the action handler for the cell
         [cell setTarget:self action:@selector(switchChanged:)];
     }
     
@@ -303,10 +297,14 @@
     //[self lightSwitch:[switchControl isOn]];
     
     [[self switchTableDataLock] lock];
-    LSSwitchInfo *switchInfo = [[self switchTableData] objectAtIndex:[switchControl tag]];
-    [switchInfo setStatus:[switchControl isOn]];
+    if ([[self switchTableData] count] > [switchControl tag]) {
+        LSSwitchInfo *switchInfo = [[self switchTableData] objectAtIndex:[switchControl tag]];
+        [switchInfo setStatus:[switchControl isOn]];
+    }
     [[self switchTableDataLock] unlock];
 }
+
+#pragma mark - Switch table helper methods
 
 - (void)saveSwitchTableData {
     [[self switchTableDataLock] lock];
