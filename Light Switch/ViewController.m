@@ -50,6 +50,7 @@
 #pragma mark - Light switch methods
 
 - (void)lightSwitch:(BOOL)on {
+#if 0
     NSURL *defaultURL = [self getDefaultURL];
     NSURL *url;
     if (on) {
@@ -64,6 +65,28 @@
     
     [self setUrlSessionTask:[session dataTaskWithURL:url]];
     [[self urlSessionTask] resume];
+#else
+    NSURL *defaultURL = [self getDefaultURL];
+    NSURL *url = [defaultURL URLByAppendingPathComponent:@"/switches/API/v1.0/switches/0"];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:60.0];
+    
+    NSString *putData = [NSString stringWithFormat:@"{\"status\":%@}", on ? @"true" : @"false"];
+    [request addValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    [request setValue:[NSString stringWithFormat:@"%lu", (unsigned long)[putData length]] forHTTPHeaderField:@"Content-Length"];
+    [request setHTTPBody:[putData dataUsingEncoding:NSUTF8StringEncoding]];
+    [request setHTTPMethod:@"PUT"];
+    
+    NSURLSessionConfiguration *config = [NSURLSessionConfiguration defaultSessionConfiguration];
+    NSURLSession *session = [NSURLSession sessionWithConfiguration:config delegate:self delegateQueue:nil];
+    
+    NSURLSessionDataTask *putDataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        NSError *err = nil;
+        NSArray *jsonDict = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&err];
+        NSLog(@"%@", jsonDict);
+    }];
+    
+    [putDataTask resume];
+#endif
 }
 
 - (void)getSwitches {
@@ -87,9 +110,6 @@
         for (NSDictionary *dict in switchArray) {
             [[self availableSwitches] addObject:dict];
         }
-        
-        //NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
-        //[dict setObject:@"value" forKey:@"key"];
         
         [[self availableSwitchesLock] unlock];
     }];
@@ -118,7 +138,7 @@
 #pragma mark - IBAction methods
 
 - (IBAction)buttonPressLightOn:(id)sender {
-#if 0
+#if 1
     [self lightSwitch:YES];
     [self.navigationItem setLeftBarButtonItem:nil animated:NO];
     self.navigationController.navigationBar.backItem.hidesBackButton = YES;
